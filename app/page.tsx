@@ -1,103 +1,63 @@
-import Image from "next/image";
+// app/page.tsx
+import Hero from "@/components/sections/Hero";
+import LogoCloud from "@/components/sections/LogoCloud";
+import CaseStudyTeaser from "@/components/sections/CaseStudyTeaser";
 
-export default function Home() {
+
+export default function HomePage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <>
+      <Hero
+        eyebrow="Shopify Plus • Design • Dev"
+        title="We build high-converting Shopify stores for ambitious brands"
+        subtitle="From theme design to custom apps and complex migrations — shipped fast, optimized for growth."
+        primaryCta={{ label: "Start a Project", href: "/contact" }}
+        secondaryCta={{ label: "See Our Work", href: "/portfolio" }}
+        metrics={[
+          { value: "+37%", label: "Avg. CVR lift" },
+          { value: "200+", label: "Projects shipped" },
+          { value: "4.9★", label: "Client rating" },
+        ]}
+        logos={[
+          { src: "/badges/shopify-partner.svg", alt: "Shopify Partner" },
+          { src: "/badges/plus.svg", alt: "Shopify Plus" },
+          { src: "/badges/klaviyo.svg", alt: "Klaviyo" },
+        ]}
+        image={{ src: "/images/hero/storefront.png", alt: "Storefront mockup", priority: true }}
+      />
+      <LogoCloud
+        heading="Brands that trust our Shopify work"
+        subheading="From fast-moving startups to enterprise Shopify Plus merchants."
+        logos={[
+          { src: "/badges/shopify-partner.svg", alt: "Shopify Partner", width: 120, height: 40 },
+          { src: "/badges/plus.svg", alt: "Shopify Plus", width: 120, height: 40 },
+          { src: "/badges/klaviyo.svg", alt: "Klaviyo", width: 120, height: 40, href: "https://www.klaviyo.com" },
+          { src: "/badges/meta.svg", alt: "Meta", width: 120, height: 40 },
+          { src: "/badges/google.svg", alt: "Google", width: 120, height: 40 },
+          { src: "/badges/algolia.svg", alt: "Algolia", width: 120, height: 40 },
+        ]}
+        grayscale
+        cta={{ label: "See case studies", href: "/portfolio" }}
+      />
+      <CaseStudyTeaser
+        href="/portfolio/acme-cvr-lift"
+        title="ACME saw +37% conversion with a fast, modular Shopify theme"
+        summary="We rebuilt ACME’s storefront with a modular section-first theme, improving speed and unlocking rapid iteration."
+        image={{ src: "/images/portfolio/acme-hero.jpg", alt: "ACME storefront mockup", priority: true }}
+        client="ACME"
+        tags={[{ label: "Shopify Plus" }, { label: "Fashion" }]}
+        metrics={[
+          { value: "+37%", label: "Conversion rate" },
+          { value: "2.1s", label: "LCP on 4G" },
+          { value: "-32%", label: "Bounce rate" },
+        ]}
+        quote={{
+          text: "They moved fast, communicated clearly, and the numbers speak for themselves.",
+          author: "Sam Rivera",
+          role: "Ecommerce Director, ACME",
+        }}
+      />
+      {/* …rest of page sections */}
+    </>
   );
 }
