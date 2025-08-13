@@ -1,0 +1,121 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { ReactNode } from "react";
+
+export type ServiceDetailProps = {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  lead?: string;            // bold intro line
+  body?: string;            // supporting paragraph
+  bullets?: string[];       // optional list under body
+  cta?: { label: string; href: string };
+  image: { src: string; alt: string; width?: number; height?: number; priority?: boolean };
+  accent?: {
+    color?: string;         // tailwind color classes, e.g. "bg-yellow-400"
+    icon?: ReactNode;       // inline SVG
+  };
+  reverse?: boolean;        // image on the left on alt rows
+};
+
+const DefaultIcon = (
+  <svg viewBox="0 0 24 24" className="h-8 w-8 text-slate-900" fill="currentColor" aria-hidden>
+    <path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14l-4-3H6a2 2 0 0 1-2-2V5Z" />
+    <path d="M8 9h8v2H8zM8 12h6v2H8z" />
+  </svg>
+);
+
+export default function ServiceDetail({
+  id,
+  eyebrow = "Custom Shopify Development Services",
+  title,
+  lead,
+  body,
+  bullets = [],
+  cta,
+  image,
+  accent = { color: "bg-yellow-400", icon: DefaultIcon },
+  reverse = false,
+}: ServiceDetailProps) {
+  return (
+    <section
+      id={id}
+      className="scroll-mt-24 border-t border-slate-200 bg-white py-14 first:border-t-0 md:py-20"
+    >
+      <div className="container mx-auto grid items-center gap-10 px-4 md:grid-cols-2">
+        {/* TEXT */}
+        <div className={reverse ? "md:order-2" : ""}>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            {eyebrow}
+          </p>
+          <h2 className="mt-2 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">
+            {title}
+          </h2>
+
+          {lead && (
+            <p className="mt-4 font-semibold text-slate-900">
+              {lead}
+            </p>
+          )}
+
+          {body && (
+            <p className="mt-3 max-w-prose text-slate-600">
+              {body}
+            </p>
+          )}
+
+          {!!bullets.length && (
+            <ul className="mt-5 space-y-2 text-slate-700">
+              {bullets.map((b) => (
+                <li key={b} className="flex gap-2">
+                  <span
+                    aria-hidden
+                    className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-sky-500"
+                  />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {cta && (
+            <div className="mt-7">
+              <Link
+                href={cta.href}
+                className="inline-flex items-center rounded-full bg-yellow-400 px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:brightness-95"
+              >
+                {cta.label}
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* IMAGE + ACCENT TILE */}
+        <div className={`relative ${reverse ? "md:order-1" : ""}`}>
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                priority={image.priority}
+                sizes="(min-width: 768px) 44rem, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          {/* colored accent tile overlapping the photo */}
+          <div
+            className={`absolute ${reverse ? "-right-6" : "-left-6"} -bottom-6 grid h-36 w-36 place-items-center rounded-xl shadow-md ${accent?.color ?? "bg-yellow-400"}`}
+            aria-hidden
+          >
+            {accent?.icon ?? DefaultIcon}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import Testimonials, { Testimonial } from "@/components/sections/Testimonials";
-import Button from "@/components/ui/Button";
+import ServiceDetail from "@/components/sections/ServiceDetail";
+import type { ServiceDetailProps } from "@/components/sections/ServiceDetail";
 
 export const metadata: Metadata = {
   title: "Services — Your Agency | Shopify Design, Development, Plus, Apps",
@@ -10,99 +11,114 @@ export const metadata: Metadata = {
     "Full-stack Shopify services: custom development, Shopify Plus, theme design, migrations, apps & API integrations, CRO, and ongoing support.",
 };
 
-type Detail = {
-  id: string;
-  title: string;
-  summary: string;
-  bullets: string[];
-  cta?: { label: string; href: string };
-};
+type Detail = Omit<ServiceDetailProps, "reverse"> & { id: string };
 
 const DETAILS: Detail[] = [
-  {
-    id: "custom-dev",
-    title: "Custom Shopify Development",
-    summary:
-      "Bespoke storefronts built with Liquid and React patterns, tuned for speed, accessibility, and maintainability.",
-    bullets: [
-      "Custom sections/blocks for flexible content",
-      "Performance budgets & Core Web Vitals optimization",
-      "Accessibility (WCAG) baked into components",
-    ],
-    cta: { label: "Start a project", href: "/contact?service=custom-dev#intake" },
-  },
-  {
-    id: "shopify-plus",
-    title: "Shopify Plus Solutions",
-    summary:
-      "Enterprise architecture, international storefronts, and complex operations on Plus.",
-    bullets: [
-      "Multi-store & multi-region setups",
-      "B2B/Wholesale experiences & customer pricing",
-      "Checkout Extensibility & Functions",
-    ],
-    cta: { label: "Talk to our Plus team", href: "/contact" },
-  },
-  {
-    id: "themes",
-    title: "Theme Design & Customization",
-    summary:
-      "Conversion-focused design systems and theme work aligned to your brand.",
-    bullets: [
-      "UX research & wireframes through polished UI",
-      "Responsive layouts & section-first content model",
-      "Design tokens for consistency at scale",
-    ],
-    cta: { label: "See our work", href: "/portfolio" },
-  },
-  {
-    id: "migrations",
-    title: "Migrations to Shopify",
-    summary:
-      "Risk-managed replatforming from WooCommerce, Magento, BigCommerce, or custom stacks.",
-    bullets: [
-      "Data migration with field/URL mapping & redirects",
-      "SEO parity & analytics continuity",
-      "Parallel staging & controlled cutover",
-    ],
-    cta: { label: "Plan my migration", href: "/contact" },
-  },
-  {
-    id: "apps",
-    title: "Apps & API Integrations",
-    summary:
-      "Private/public apps, backend services, and integrations with your ERP, 3PL, or marketing stack.",
-    bullets: [
-      "Admin & public apps using GraphQL/REST",
-      "ERP/OMS/3PL & marketing integrations",
-      "Headless/hybrid architectures when needed",
-    ],
-    cta: { label: "Discuss integrations", href: "/contact" },
-  },
-  {
-    id: "cro",
-    title: "CRO & Ongoing Optimization",
-    summary:
-      "Experiments, speed audits, and UX improvements that move the needle.",
-    bullets: [
-      "A/B testing & experiment design",
-      "Analytics, tagging, dashboards",
-      "Performance audits & remediation",
-    ],
-    cta: { label: "Request an audit", href: "/contact" },
-  },
-  {
-    id: "support",
-    title: "Support & Maintenance",
-    summary:
-      "Reliable retainers for updates, security, and proactive improvements.",
-    bullets: [
-      "SLA-based support with defined response times",
-      "Quarterly roadmaps & sprint execution",
-      "Monthly reporting and insights",
-    ],
-    cta: { label: "Set up a retainer", href: "/contact" },
-  },
+    {
+        id: "custom-dev",
+        title: "Customize your ecommerce exactly the way you want",
+        lead: "Shopify is great for customization.",
+        body:
+          "What if your business model offers unique processes and no ready-made e-commerce can host them? We design and build bespoke storefronts with Liquid, React, and Tailwind so your team can move fast without constraints.",
+        bullets: [
+          "Custom sections/blocks your team can edit",
+          "Core Web Vitals performance optimization",
+          "WCAG 2.1 AA accessibility in components",
+        ],
+        cta: { label: "Book a meeting", href: "/contact?service=custom-dev#intake" },
+        image: { src: "/images/services/custom-dev.jpeg", alt: "Developer working on a Shopify theme" },
+        accent: { color: "bg-yellow-400" },
+      },
+      {
+        id: "shopify-plus",
+        title: "Complex operations on Shopify Plus, simplified",
+        lead: "Enterprise architecture, international stores, and B2B—built to scale.",
+        body:
+          "From multi-region catalogs to checkout extensibility and B2B pricing, we ship Plus solutions that balance power and maintainability.",
+        bullets: [
+          "Multi-store / multi-region setups",
+          "B2B/Wholesale experiences & company accounts",
+          "Checkout Extensibility & Functions",
+        ],
+        cta: { label: "Talk to our Plus team", href: "/contact?service=shopify-plus#intake" },
+        image: { src: "/images/services/plus.jpeg", alt: "Shopify Plus operations dashboard" },
+        accent: { color: "bg-sky-400" },
+      },
+      {
+        id: "themes",
+        title: "Theme design that looks great and converts",
+        lead: "Design systems and custom themes that balance brand and performance.",
+        body:
+          "From research and wireframes to polished UI, we build section-first themes your team can update without dev help—fast, accessible, and responsive across devices.",
+        bullets: [
+          "UX research, wireframes, and high-fidelity UI",
+          "Reusable sections/blocks with design tokens",
+          "A11y and SEO baked into the theme",
+        ],
+        cta: { label: "See our work", href: "/portfolio#themes" },
+        image: { src: "/images/services/themes.jpeg", alt: "Custom Shopify theme layouts" },
+        accent: { color: "bg-rose-400" },
+      },
+      {
+        id: "migrations",
+        title: "Zero-drama migrations to Shopify",
+        lead: "Replatform from WooCommerce, Magento, BigCommerce, or custom stacks—without losing SEO.",
+        body:
+          "We plan redirects, map data, preserve analytics, and orchestrate a clean cutover so your traffic and revenue stay intact while performance improves.",
+        bullets: [
+          "Data & URL mapping + 301 redirect plan",
+          "SEO parity, tracking & analytics continuity",
+          "Parallel staging and controlled launch",
+        ],
+        cta: { label: "Plan my migration", href: "/contact?service=migrations#intake" },
+        image: { src: "/images/services/migrations.jpeg", alt: "Migration plan and data mapping" },
+        accent: { color: "bg-amber-400" },
+      },
+      {
+        id: "apps",
+        title: "Custom apps & API integrations",
+        lead: "Extend Shopify with private/public apps and reliable integrations.",
+        body:
+          "We build Admin and public apps, connect ERPs, CRMs, 3PLs, and marketing tools, and ship robust GraphQL/REST integrations designed for scale.",
+        bullets: [
+          "Admin & public apps (App Bridge, Polaris)",
+          "GraphQL/REST integrations to ERP/OMS/3PL",
+          "Headless/hybrid architectures when needed",
+        ],
+        cta: { label: "Discuss integrations", href: "/contact?service=apps#intake" },
+        image: { src: "/images/services/apps.jpeg", alt: "Shopify app UI and API diagrams" },
+        accent: { color: "bg-indigo-400" },
+      },
+      {
+        id: "cro",
+        title: "CRO & ongoing optimization",
+        lead: "Iterate with data, not guesses.",
+        body:
+          "We run experiments, fix UX friction, and improve speed. Expect clear hypotheses, measurable results, and a steady drumbeat of wins.",
+        bullets: [
+          "A/B testing & experiment design",
+          "Analytics, tagging, dashboards & insights",
+          "Performance audits and remediation",
+        ],
+        cta: { label: "Request an audit", href: "/contact?service=cro#intake" },
+        image: { src: "/images/services/cro.jpeg", alt: "Conversion dashboards and experiment results" },
+        accent: { color: "bg-emerald-400" },
+      },
+      {
+        id: "support",
+        title: "Support & maintenance",
+        lead: "Reliable retainers for updates, security, and proactive improvements.",
+        body:
+          "From small enhancements to roadmap delivery, we operate like your product team—prioritized sprints, SLAs, and transparent reporting.",
+        bullets: [
+          "SLA-based support with clear response times",
+          "Quarterly roadmaps & sprint execution",
+          "Monthly reporting and insights",
+        ],
+        cta: { label: "Set up a retainer", href: "/contact?service=support#intake" },
+        image: { src: "/images/services/support.jpeg", alt: "Roadmap planning and sprint board" },
+        accent: { color: "bg-slate-400" },
+      },
 ];
 
 // Example testimonials for this page
@@ -161,47 +177,15 @@ export default function Page() {
       {/* Grid */}
       <ServicesGrid />
 
-      {/* Details */}
+      {/* Rich detailed sections (alternating layout) */}
       <section className="bg-white">
-        <div className="container mx-auto px-4 pb-24">
-          <div className="mx-auto max-w-3xl">
-            {DETAILS.map((item) => (
-              <article
-                key={item.id}
-                id={item.id}
-                className="scroll-mt-24 border-t border-slate-200 py-10 first:border-t-0 first:pt-0"
-              >
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-                  {item.title}
-                </h2>
-                <p className="mt-2 text-slate-600">{item.summary}</p>
-
-                <ul className="mt-4 space-y-2 text-slate-700">
-                  {item.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-sky-500"
-                      />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {item.cta && (
-                  <div className="mt-5">
-                    <Link
-                      className="inline-flex items-center rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95"
-                      href={item.cta.href}
-                    >
-                      {item.cta.label}
-                    </Link>
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        </div>
+        {DETAILS.map((item, i) => (
+          <ServiceDetail
+            key={item.id}
+            {...item}
+            reverse={i % 2 === 1}   // alternate layout each row
+          />
+        ))}
       </section>
 
       {/* Testimonials */}
