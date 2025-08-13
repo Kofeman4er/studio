@@ -1,88 +1,122 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
+const SERVICE_OPTIONS = [
+  { value: "", label: "Select a service…" },
+  { value: "custom-dev", label: "Custom Shopify Development" },
+  { value: "shopify-plus", label: "Shopify Plus Solutions" },
+  { value: "themes", label: "Theme Design & Customization" },
+  { value: "migrations", label: "Migrations" },
+  { value: "apps", label: "Apps & API Integrations" },
+  { value: "cro", label: "CRO & Optimization" },
+  { value: "support", label: "Support & Maintenance" },
+];
 
 export default function ContactPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const service = searchParams.get("service") ?? "";
+  const params = useSearchParams();
+  const defaultService = params.get("service") ?? "";
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-    service: service,
-  });
-
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-        ...formData,
-      }),
-    });
-
-    setLoading(false);
-
-    if (res.ok) {
-      router.push("/thank-you");
-    } else {
-      alert("Failed to send message");
-    }
-  };
+  // Absolute URL for redirect after success (change to your domain in prod)
+  const redirectUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/thank-you`
+      : "/thank-you";
 
   return (
     <section className="container mx-auto px-4 py-12 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
-      <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
+      <h1 className="text-3xl font-bold tracking-tight text-slate-900">Start a project</h1>
+      <p className="mt-2 max-w-2xl text-slate-600">
+        Tell us a bit about your Shopify project and we’ll get back within one business day.
+      </p>
+
+      {/* Web3Forms: submit directly to their endpoint */}
+      <form
+        id="intake"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        className="mt-8 grid max-w-xl gap-4"
+      >
+        {/* REQUIRED: your public access key (safe to expose) */}
         <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          className="w-full rounded border p-2"
-          value={formData.name}
-          onChange={handleChange}
-          required
+          type="hidden"
+          name="access_key"
+          value={process.env.NEXT_PUBLIC_WEB3FORMS_KEY}
         />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          className="w-full rounded border p-2"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="message"
-          placeholder="Your Message"
-          className="w-full rounded border p-2"
-          value={formData.message}
-          onChange={handleChange}
-          required
-        />
+
+        {/* Optional niceties */}
+        <input type="hidden" name="subject" value="New project inquiry from website" />
+        <input type="hidden" name="from_name" value="Your Agency Website" />
+        <input type="hidden" name="redirect" value={redirectUrl} />
+        <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+
+        <label className="text-sm font-medium text-slate-700">
+          What do you need?
+          <select
+            name="service"
+            defaultValue={defaultService}
+            required
+            className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+          >
+            {SERVICE_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="text-sm font-medium text-slate-700">
+          Your name
+          <input
+            name="name"
+            type="text"
+            required
+            placeholder="Jane Doe"
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+          />
+        </label>
+
+        <label className="text-sm font-medium text-slate-700">
+          Email
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="you@company.com"
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+          />
+        </label>
+
+        <label className="text-sm font-medium text-slate-700">
+          Message
+          <textarea
+            name="message"
+            rows={6}
+            placeholder="Share goals, timelines, budget range—anything that helps."
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+          />
+        </label>
+
+        {/* Helpful context fields for your inbox/automations */}
+        <input type="hidden" name="source" value="contact_page" />
+        <input type="hidden" name="path" value="/contact" />
+
         <button
           type="submit"
-          className="rounded bg-sky-500 px-4 py-2 text-white hover:brightness-95"
-          disabled={loading}
+          className="inline-flex items-center justify-center rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95"
         >
-          {loading ? "Sending..." : "Send Message"}
+          Send message
         </button>
       </form>
+
+      <p className="mt-6 text-xs text-slate-500">
+        By submitting, you agree to our{" "}
+        <a href="/privacy-policy" className="underline">
+          Privacy Policy
+        </a>
+        .
+      </p>
     </section>
   );
 }
