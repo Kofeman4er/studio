@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 const SERVICE_OPTIONS = [
@@ -14,16 +15,39 @@ const SERVICE_OPTIONS = [
 ];
 
 export default function ContactPage() {
+  return (
+    <Suspense fallback={<ContactSkeleton />}>
+      <ContactForm />
+    </Suspense>
+  );
+}
+
+function ContactSkeleton() {
+  return (
+    <section className="container mx-auto px-4 py-12 bg-gray-50">
+      <div className="h-7 w-64 animate-pulse rounded bg-slate-200" />
+      <div className="mt-3 h-5 w-96 animate-pulse rounded bg-slate-200" />
+      <div className="mt-8 grid max-w-xl gap-4">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-10 w-full animate-pulse rounded bg-slate-200" />
+        ))}
+        <div className="h-24 w-full animate-pulse rounded bg-slate-200" />
+        <div className="h-10 w-32 animate-pulse rounded bg-slate-300" />
+      </div>
+    </section>
+  );
+}
+
+function ContactForm() {
   const params = useSearchParams();
   const defaultService = params.get("service") ?? "";
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
 
   return (
     <section className="container mx-auto px-4 py-12 bg-gray-50">
-      {/* Optional: warn in dev if the key is missing */}
       {!accessKey && (
         <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800">
-          <b>Heads up:</b> <code>NEXT_PUBLIC_WEB3FORMS_KEY</code> is not set. Add it to your
+          <b>Heads up:</b> <code>NEXT_PUBLIC_WEB3FORMS_KEY</code> is not set. Add it to
           <code> .env.local</code> so submissions work.
         </div>
       )}
