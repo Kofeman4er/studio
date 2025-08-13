@@ -16,15 +16,18 @@ const SERVICE_OPTIONS = [
 export default function ContactPage() {
   const params = useSearchParams();
   const defaultService = params.get("service") ?? "";
-
-  // Absolute URL for redirect after success (change to your domain in prod)
-  const redirectUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/thank-you`
-      : "/thank-you";
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
 
   return (
     <section className="container mx-auto px-4 py-12 bg-gray-50">
+      {/* Optional: warn in dev if the key is missing */}
+      {!accessKey && (
+        <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800">
+          <b>Heads up:</b> <code>NEXT_PUBLIC_WEB3FORMS_KEY</code> is not set. Add it to your
+          <code> .env.local</code> so submissions work.
+        </div>
+      )}
+
       <h1 className="text-3xl font-bold tracking-tight text-slate-900">Start a project</h1>
       <p className="mt-2 max-w-2xl text-slate-600">
         Tell us a bit about your Shopify project and we’ll get back within one business day.
@@ -38,16 +41,14 @@ export default function ContactPage() {
         className="mt-8 grid max-w-xl gap-4"
       >
         {/* REQUIRED: your public access key (safe to expose) */}
-        <input
-          type="hidden"
-          name="access_key"
-          value={process.env.NEXT_PUBLIC_WEB3FORMS_KEY}
-        />
+        <input type="hidden" name="access_key" value={accessKey} />
 
         {/* Optional niceties */}
         <input type="hidden" name="subject" value="New project inquiry from website" />
         <input type="hidden" name="from_name" value="Your Agency Website" />
-        <input type="hidden" name="redirect" value={redirectUrl} />
+        {/* Relative redirect works fine */}
+        <input type="hidden" name="redirect" value="/thank-you" />
+        {/* Honeypot */}
         <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
 
         <label className="text-sm font-medium text-slate-700">
