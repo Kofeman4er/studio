@@ -131,7 +131,7 @@ export default function ServicesGrid({
 }: Props) {
   return (
     <section className="relative">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 bg-gray-50">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-wider text-sky-600">

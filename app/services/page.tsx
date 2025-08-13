@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import Testimonials, { Testimonial } from "@/components/sections/Testimonials";
+import Button from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Services — Your Agency | Shopify Design, Development, Plus, Apps",
@@ -28,7 +29,7 @@ const DETAILS: Detail[] = [
       "Performance budgets & Core Web Vitals optimization",
       "Accessibility (WCAG) baked into components",
     ],
-    cta: { label: "Start a project", href: "/contact" },
+    cta: { label: "Start a project", href: "/contact?service=custom-dev#intake" },
   },
   {
     id: "shopify-plus",
