@@ -29,8 +29,8 @@ type Props = {
 };
 
 export default function Header({
-  brand = "Your Agency",
-  logoSrc,
+  brand = "Devsolutions",
+  logoSrc = "/images/logo.png",
   logoAlt = "Logo",
   logoHref = "/",
   links = LINKS,

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/newsletter/NewsletterForm";
+import Image from "next/image";
+
 
 type LinkItem = { label: string; href: string };
 type Column = { title: string; links: LinkItem[] };
@@ -131,7 +134,7 @@ function Icon({ name }: { name: Social }) {
 }
 
 export default function Footer({
-  brand = "Your Agency",
+  brand = "Devsolutions",
   tagline = "We build high-converting Shopify stores.",
   email = "hello@youragency.com",
   phone = "+1 (000) 000-0000",
@@ -153,7 +156,7 @@ export default function Footer({
         {/* Brand / About */}
         <div className="md:col-span-4">
           <div className="inline-flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-md bg-sky-500 text-white">◆</span>
+            <Image src="/images/logo.png" alt="logo" width={28} height={28} />
             <span className="text-lg font-bold text-slate-900">{brand}</span>
           </div>
           <p className="mt-3 max-w-sm text-sm text-slate-600">{tagline}</p>
@@ -221,41 +224,29 @@ export default function Footer({
 
       {/* Newsletter */}
       {newsletter?.enabled && (
-        <div className="border-t border-slate-200 bg-slate-50/60">
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h4 className="text-base font-semibold text-slate-900">Stay in the loop</h4>
-                <p className="text-sm text-slate-600">
-                  Tips on CRO, speed, and Shopify updates—straight to your inbox.
+        <div className="border-t border-slate-200 bg-white">
+          <div className="container mx-auto px-4 py-6 md:py-10">
+            <div className="flex flex-col items-center text-center gap-6 md:flex-row md:text-left md:justify-between">
+              {/* Text */}
+              <div className="max-w-md">
+                <h4 className="text-lg font-semibold text-slate-900 tracking-tight">
+                  Stay in the loop
+                </h4>
+                <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                  Expert tips on CRO, speed optimization, and Shopify news — delivered monthly.
                 </p>
               </div>
-              <form
-                action={newsletter.action}
-                method="post"
-                className="flex w-full max-w-lg gap-2 md:w-auto"
-              >
-                <label htmlFor="email" className="sr-only">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder={newsletter.placeholder}
-                  className="w-full flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                />
-                <button
-                  type="submit"
-                  className="inline-flex items-center rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95"
-                >
-                  Subscribe
-                </button>
-              </form>
+
+              {/* Form */}
+              <div className="w-full md:w-auto">
+                <NewsletterForm />
+              </div>
             </div>
+
             {newsletter.disclaimer && (
-              <p className="mt-2 text-xs text-slate-500">{newsletter.disclaimer}</p>
+              <p className="mt-4 text-xs text-slate-500 text-center md:text-left">
+                {newsletter.disclaimer}
+              </p>
             )}
           </div>
         </div>
