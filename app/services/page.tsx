@@ -26,7 +26,7 @@ const DETAILS: Detail[] = [
           "WCAG 2.1 AA accessibility in components",
         ],
         cta: { label: "Book a meeting", href: "/contact?service=custom-dev#intake" },
-        image: { src: "/images/services/custom-dev.jpeg", alt: "Developer working on a Shopify theme" },
+        image: { src: "/images/services/custom-dev.jpg", alt: "Developer working on a Shopify theme" },
         accent: { color: "bg-yellow-400" },
       },
       {
@@ -41,7 +41,7 @@ const DETAILS: Detail[] = [
           "Checkout Extensibility & Functions",
         ],
         cta: { label: "Talk to our Plus team", href: "/contact?service=shopify-plus#intake" },
-        image: { src: "/images/services/plus.jpeg", alt: "Shopify Plus operations dashboard" },
+        image: { src: "/images/services/plus.jpg", alt: "Shopify Plus operations dashboard" },
         accent: { color: "bg-sky-400" },
       },
       {
@@ -56,7 +56,7 @@ const DETAILS: Detail[] = [
           "A11y and SEO baked into the theme",
         ],
         cta: { label: "See our work", href: "/portfolio#themes" },
-        image: { src: "/images/services/themes.jpeg", alt: "Custom Shopify theme layouts" },
+        image: { src: "/images/services/themes.jpg", alt: "Custom Shopify theme layouts" },
         accent: { color: "bg-rose-400" },
       },
       {
@@ -71,7 +71,7 @@ const DETAILS: Detail[] = [
           "Parallel staging and controlled launch",
         ],
         cta: { label: "Plan my migration", href: "/contact?service=migrations#intake" },
-        image: { src: "/images/services/migrations.jpeg", alt: "Migration plan and data mapping" },
+        image: { src: "/images/services/migrations.jpg", alt: "Migration plan and data mapping" },
         accent: { color: "bg-amber-400" },
       },
       {
@@ -86,7 +86,7 @@ const DETAILS: Detail[] = [
           "Headless/hybrid architectures when needed",
         ],
         cta: { label: "Discuss integrations", href: "/contact?service=apps#intake" },
-        image: { src: "/images/services/apps.jpeg", alt: "Shopify app UI and API diagrams" },
+        image: { src: "/images/services/apps.jpg", alt: "Shopify app UI and API diagrams" },
         accent: { color: "bg-indigo-400" },
       },
       {
@@ -101,7 +101,7 @@ const DETAILS: Detail[] = [
           "Performance audits and remediation",
         ],
         cta: { label: "Request an audit", href: "/contact?service=cro#intake" },
-        image: { src: "/images/services/cro.jpeg", alt: "Conversion dashboards and experiment results" },
+        image: { src: "/images/services/cro.jpg", alt: "Conversion dashboards and experiment results" },
         accent: { color: "bg-emerald-400" },
       },
       {
@@ -116,7 +116,7 @@ const DETAILS: Detail[] = [
           "Monthly reporting and insights",
         ],
         cta: { label: "Set up a retainer", href: "/contact?service=support#intake" },
-        image: { src: "/images/services/support.jpeg", alt: "Roadmap planning and sprint board" },
+        image: { src: "/images/services/support.jpg", alt: "Roadmap planning and sprint board" },
         accent: { color: "bg-slate-400" },
       },
 ];
