@@ -14,12 +14,12 @@ type ServiceCard = {
 const SERVICES: ServiceCard[] = [
   { id: "custom-dev", title: "Custom Shopify Development", blurb: "Sections, Liquid & React patterns that scale.", href: "/services#custom-dev", image: "/images/services/custom-dev.jpg", icon: "spark" },
   { id: "redesign", title: "Complete Redesign or Store Facelift", blurb: "Elevate UX, branding, and conversion.", href: "/services#themes", image: "/images/services/redesign.jpg", icon: "theme" },
-  { id: "seo", title: "Shopify SEO & Content Marketing", blurb: "Technical SEO + content that ranks.", href: "/services/cro", image: "/images/services/seo.jpg", icon: "chart" },
+  { id: "seo", title: "Shopify SEO & Content Marketing", blurb: "Technical SEO + content that ranks.", href: "/services#seo", image: "/images/services/seo.jpg", icon: "chart" },
   { id: "plus", title: "Shopify Plus Support & Services", blurb: "Multi-store, B2B, and checkout extensibility.", href: "/services#shopify-plus", image: "/images/services/plus.jpg", icon: "plus" },
   { id: "migrations", title: "Migrations to Shopify", blurb: "Risk-managed replatforming without SEO loss.", href: "/services#migrations", image: "/images/services/migrate.jpg", icon: "migrate" },
   { id: "apps", title: "Apps & API Integrations", blurb: "Private/public apps + ERP/3PL integrations.", href: "/services#apps", image: "/images/services/apps.jpg", icon: "api" },
   { id: "cro", title: "CRO & Experimentation", blurb: "A/B testing that moves the KPI needle.", href: "/services#cro", image: "/images/services/cro.jpg", icon: "ab" },
-  { id: "speed", title: "Performance & Speed Optimization", blurb: "Core Web Vitals, faster LCP/INP, happier users.", href: "/services/speed-optimization", image: "/images/services/speed.jpg", icon: "speed" },
+  { id: "speed", title: "Performance & Speed Optimization", blurb: "Core Web Vitals, faster LCP/INP, happier users.", href: "/services#support", image: "/images/services/speed.jpg", icon: "speed" },
 ];
 
 export default function ServicesShowcase() {
@@ -45,22 +45,19 @@ function Card({ title, blurb, href, image, icon = "spark" }: ServiceCard) {
         focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500
       "
     >
-      {/* Background image with slow zoom on hover (5s) */}
+      {/* Background image — slow zoom on hover */}
       <Image
         src={image}
         alt={title}
         fill
-        className="
-          object-cover transition-transform duration-[5000ms]
-          group-hover:scale-110
-        "
+        className="object-cover transition-transform duration-[5000ms] group-hover:scale-110"
         sizes="(min-width:1024px) 25vw, (min-width:768px) 50vw, 100vw"
       />
 
       {/* Base readability gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-      {/* Hover tint overlay (sky) */}
+      {/* Hover tint overlay */}
       <div
         className="
           pointer-events-none absolute inset-0
@@ -71,8 +68,8 @@ function Card({ title, blurb, href, image, icon = "spark" }: ServiceCard) {
       />
 
       {/* Content */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-6">
-        {/* Icon & Title wrapper: nudge up on hover */}
+      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+        {/* Icon + Title (nudge up on hover) */}
         <div className="transition-transform duration-300 group-hover:-translate-y-1">
           <div className="mb-2">
             <Icon name={icon} className="h-10 w-10 text-white drop-shadow-md" />
@@ -82,18 +79,21 @@ function Card({ title, blurb, href, image, icon = "spark" }: ServiceCard) {
           </h3>
         </div>
 
-        {/* Blurb: slide in from bottom on hover */}
+        {/* Blurb container: no reserved space until hover */}
         {blurb && (
-          <p
+          <div
             className="
-              mt-3 max-w-[38ch] text-base text-white/90
-              translate-y-2 opacity-0
+              mt-1 max-w-[48ch] overflow-hidden
+              max-h-0 opacity-0 translate-y-2
               transition-all duration-300
-              group-hover:translate-y-0 group-hover:opacity-100
+              group-hover:max-h-24 group-hover:opacity-100 group-hover:translate-y-0
+              md:group-hover:max-h-28
             "
           >
-            {blurb}
-          </p>
+            <p className="text-base text-white/90">
+              {blurb}
+            </p>
+          </div>
         )}
       </div>
     </Link>
