@@ -134,7 +134,7 @@ function Icon({ name }: { name: Social }) {
 }
 
 export default function Footer({
-  brand = "Devsolutions",
+  brand = "Devsolutify",
   tagline = "We build high-converting Shopify stores.",
   email = "hello@youragency.com",
   phone = "+1 (000) 000-0000",

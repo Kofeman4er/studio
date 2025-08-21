@@ -29,7 +29,7 @@ type Props = {
 };
 
 export default function Header({
-  brand = "Devsolutions",
+  brand = "Devsolutify",
   logoSrc = "/images/logo.png",
   logoAlt = "Logo",
   logoHref = "/",

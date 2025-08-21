@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import ServicesShowcase from "@/components/sections/ServicesShowcase";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import Testimonials, { Testimonial } from "@/components/sections/Testimonials";
 import ServiceDetail from "@/components/sections/ServiceDetail";
@@ -175,7 +175,7 @@ export default function Page() {
       </section>
 
       {/* Grid */}
-      <ServicesGrid />
+      <ServicesShowcase />
 
       {/* Rich detailed sections (alternating layout) */}
       <section className="bg-white">
