@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import LogoCloud from "@/components/sections/LogoCloud";
 import Testimonials from "@/components/sections/Testimonials";
 import Button from "@/components/ui/Button";
@@ -10,12 +9,7 @@ export const metadata: Metadata = {
         "We’re a Shopify-focused team building fast, accessible storefronts and scaling brands on Shopify Plus.",
 };
 
-const STATS = [
-    { value: "8+ yrs", label: "Shopify focus" },
-    { value: "120+", label: "Stores launched" },
-    { value: "30–90d", label: "Typical build time" },
-    { value: "4.9★", label: "Client rating" },
-];
+
 
 const VALUES = [
     {

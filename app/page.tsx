@@ -28,7 +28,7 @@ export default function HomePage() {
               Shopify experts
             </h2>
             <p className="mt-3 max-w-2xl text-slate-600">
-              If you're ready to design, develop or scale on Shopify we have the solution.
+              If you&apos;re ready to design, develop or scale on Shopify we have the solution.
             </p>
           </div>
         </div>
