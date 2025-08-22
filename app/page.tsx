@@ -22,16 +22,15 @@ export default function HomePage() {
         ]}
       />
       <WhyUs />
-      <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Shopify experts
-            </h2>
-            <p className="mt-3 max-w-2xl text-slate-600">
-              If you&apos;re ready to design, develop or scale on Shopify we have the solution.
-            </p>
-          </div>
+        <div className="mb-12 flex flex-col items-center text-center">
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Shopify experts
+          </h2>
+          <p className="mt-3 max-w-2xl text-slate-600">
+            If you&apos;re ready to design, develop or scale on Shopify we have the solution.
+          </p>
         </div>
+
       <ServicesShowcase />
 
     </>

@@ -4,7 +4,7 @@ import Link from "next/link";
 type Row = {
   platform: string;
   blurb?: string;
-  values: [boolean, boolean, boolean, boolean, boolean]; // Speed, Quality, Support, Cost (Yes = ✓)
+  values: [boolean, boolean, boolean, boolean, boolean]; // Speed, Quality, Support, Cost
 };
 
 const ROWS: Row[] = [
@@ -44,24 +44,22 @@ export default function WhyUs() {
   return (
     <section className="relative border-t border-slate-200 bg-white">
       <div className="container mx-auto px-4 py-16">
-        {/* Header */}
-        <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-sky-700">
-              Built for you
-            </p>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Why us?
-            </h2>
-            <p className="mt-3 max-w-2xl text-slate-600">
-              Compare how Devsolutify stacks up against common alternatives for
-              Shopify work.
-            </p>
-          </div>
+        {/* Centered Header */}
+        <div className="mb-12 flex flex-col items-center text-center">
+          <p className="text-xs font-semibold uppercase tracking-wider text-sky-700">
+            Built for you
+          </p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Why us?
+          </h2>
+          <p className="mt-3 max-w-2xl text-slate-600">
+            Compare how Devsolutify stacks up against common alternatives for
+            Shopify work.
+          </p>
 
           <Link
             href="/contact?service=custom-dev#intake"
-            className="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
           >
             Get started
           </Link>
@@ -72,8 +70,7 @@ export default function WhyUs() {
           <table className="min-w-[720px] w-full border-collapse">
             <thead className="bg-slate-50">
               <tr className="text-left text-sm font-semibold text-slate-700">
-                <Th className="w-[36%]"> </Th>
-                <Th >Platform</Th>
+                <Th className="w-[36%]">Platform</Th>
                 <Th>Speed</Th>
                 <Th>Quality</Th>
                 <Th>Support</Th>
@@ -84,7 +81,9 @@ export default function WhyUs() {
               {ROWS.map((row, idx) => (
                 <tr key={row.platform} className="align-top">
                   <td className="p-5">
-                    <div className="text-slate-900 font-semibold">{row.platform}</div>
+                    <div className="text-slate-900 font-semibold">
+                      {row.platform}
+                    </div>
                     {row.blurb && (
                       <p className="mt-1 text-sm leading-relaxed text-slate-600">
                         {row.blurb}
@@ -106,8 +105,7 @@ export default function WhyUs() {
           </table>
         </div>
 
-        {/* Optional: tiny legend */}
-        <p className="mt-3 text-xs text-slate-500">
+        <p className="mt-3 text-center text-xs text-slate-500">
           Checks indicate a strong fit for everyday, growth-focused Shopify needs.
         </p>
       </div>
@@ -144,7 +142,6 @@ function BadgeCheck({ ariaLabel }: { ariaLabel: string }) {
         fill="none"
         aria-hidden="true"
       >
-        <circle cx="12" cy="12" r="11" className="opacity-0" />
         <path
           d="M7 12.5l3 3 7-7"
           stroke="currentColor"
