@@ -1,141 +1,126 @@
-"use client";
-
-import Image from "next/image";
+// components/sections/Hero.tsx
+"use client"
 import Link from "next/link";
+import Image from "next/image";
 
-type Logo = { src: string; alt: string; href?: string; width?: number; height?: number };
+type Cta = { label: string; href: string; variant?: "primary" | "secondary" };
+type Slide = { src: string; alt?: string };
 
 type Props = {
   eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-  metrics?: { label: string; value: string }[]; // e.g. [{value:"+37%", label:"Avg. CVR lift"}]
-  logos?: Logo[]; // client/partner logos
-  image?: { src: string; alt: string; width?: number; height?: number; priority?: boolean };
+  heading?: string;
+  subheading?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+  slides?: Slide[]; // supply ~3 images; we loop them infinitely
 };
 
 export default function Hero({
-  eyebrow = "Shopify Experts",
-  title,
-  subtitle = "We design, build, and optimize high-converting Shopify stores for ambitious brands.",
-  primaryCta = { label: "Start a Project", href: "/contact" },
-  secondaryCta = { label: "See Our Work", href: "/portfolio" },
-  metrics = [
-    { value: "+37%", label: "Avg. CVR lift" },
-    { value: "200+", label: "Projects shipped" },
-    { value: "4.9★", label: "Client rating" },
+  eyebrow = "THE O.G. SUBSCRIPTION",
+  heading = "YOUR ULTIMATE\nCREATIVE PARTNER",
+  subheading = "We combine expert Shopify development, performance, CRO, and integrations to power your growth.",
+  primaryCta = { label: "Get Started", href: "/contact?service=custom-dev#intake", variant: "primary" },
+  secondaryCta = { label: "How it works", href: "/process", variant: "secondary" },
+  slides = [
+    { src: "/images/hero/slide-1.jpg", alt: "Work 1" },
+    { src: "/images/hero/slide-2.jpg", alt: "Work 2" },
+    { src: "/images/hero/slide-3.jpg", alt: "Work 3" },
   ],
-  logos,
-  image, // e.g. { src: "/images/hero/storefront.png", alt: "Mockup" }
 }: Props) {
   return (
-    <section className="relative overflow-hidden">
-      {/* subtle background */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-sky-50/60 via-white to-white" />
-      <div
-        aria-hidden
-        className="absolute -top-24 left-1/2 -z-10 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-sky-100 blur-3xl"
-      />
-
-      <div className="container mx-auto grid items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
-        {/* Copy */}
-        <div>
-          <p className="mb-3 inline-flex items-center rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
-            {eyebrow}
-          </p>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-              {subtitle}
-            </p>
-          )}
-
-          {/* CTAs */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            {primaryCta && (
-              <Link
-                href={primaryCta.href}
-                className="inline-flex items-center rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
-              >
-                {primaryCta.label}
-              </Link>
-            )}
-            {secondaryCta && (
-              <Link
-                href={secondaryCta.href}
-                className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
-              >
-                {secondaryCta.label}
-              </Link>
-            )}
-          </div>
-
-          {/* Metrics */}
-          {metrics?.length ? (
-            <dl className="mt-8 grid grid-cols-3 gap-4 max-sm:grid-cols-2">
-              {metrics.map((m) => (
-                <div key={m.label} className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-                  <dt className="text-xs text-slate-500">{m.label}</dt>
-                  <dd className="mt-1 text-xl font-bold text-slate-900">{m.value}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
-
-          {/* Logo cloud */}
-          {logos?.length ? (
-            <div className="mt-8">
-              <p className="text-xs uppercase tracking-wide text-slate-500">Trusted by</p>
-              <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-4 opacity-80">
-                {logos.map((logo, i) =>
-                  logo.href ? (
-                    <a key={i} href={logo.href} target="_blank" rel="noreferrer">
-                      <Image
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={logo.width ?? 96}
-                        height={logo.height ?? 32}
-                      />
-                    </a>
-                  ) : (
-                    <Image
-                      key={i}
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={logo.width ?? 96}
-                      height={logo.height ?? 32}
-                    />
-                  )
-                )}
-              </div>
-            </div>
-          ) : null}
+    <section className="relative isolate overflow-hidden bg-[#0b0b0b] text-white">
+      {/* Full height on lg; tall on smaller screens */}
+      <div className="relative mx-auto h-[72vh] md:h-[76vh] lg:h-screen max-w-[1232px] px-4">
+        {/* CAROUSEL — right 50%, behind text */}
+        <div className="absolute inset-y-0 right-0 z-0 w-1/2 overflow-hidden">
+          {/* left-edge tint so slides tuck under copy */}
+          <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-28 bg-gradient-to-r from-[#0b0b0b] via-[#0b0b0b]/70 to-transparent" />
+          <Marquee slides={slides} />
         </div>
 
-        {/* Image */}
-        <div className="relative">
-          {image ? (
-            <div className="relative mx-auto aspect-[4/3] w-full max-w-xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                priority={image.priority}
-                sizes="(min-width: 768px) 42rem, 100vw"
-                className="object-cover"
-              />
+        {/* COPY — ~75% width, over the carousel */}
+        <div className="relative z-10 flex h-full w-full items-center">
+          <div className="w-full lg:w-3/4">
+            <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-sky-500">
+              {eyebrow}
+            </p>
+            <h1 className="mt-3 text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl">
+              {heading.split("\n").map((line, i) => (
+                <span key={i} className="block">
+                  {line}
+                </span>
+              ))}
+            </h1>
+            <p className="mt-6 max-w-3xl text-lg text-white/80 sm:text-xl">{subheading}</p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <CtaLink {...primaryCta} />
+              <CtaLink {...secondaryCta} />
             </div>
-          ) : (
-            <div className="mx-auto max-w-xl rounded-2xl border border-dashed border-slate-200 p-8 text-center text-slate-500">
-              <span className="text-sm">Add a hero image via the <code>image</code> prop</span>
-            </div>
-          )}
+          </div>
         </div>
       </div>
+
+      {/* subtle top/bottom fades */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/50 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/50 to-transparent" />
+
+      {/* GLOBAL keyframes so the animation runs */}
+      <style jsx global>{`
+        @keyframes hero-marquee {
+          0%   { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-marquee-anim { animation: none !important; }
+        }
+      `}</style>
     </section>
+  );
+}
+
+function Marquee({ slides }: { slides: Slide[] }) {
+  const GAP = 21; // px – keep constant spacing (and at the loop seam)
+  return (
+    <div className="absolute inset-0">
+      <div className="absolute top-1/2 -translate-y-1/2">
+        <div
+          className="flex w-max gap-[21px] pr-[21px] hero-marquee-anim"
+          style={{ animation: "hero-marquee 52s linear infinite" }}
+        >
+          <Strip slides={slides} />
+          <Strip slides={slides} /> {/* duplicate once for seamless loop */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Strip({ slides }: { slides: Slide[] }) {
+  return (
+    <div className="flex items-center gap-[21px]">
+      {slides.map((s, i) => (
+        <div
+          key={`${s.src}-${i}`}
+          className="relative h-[460px] w-[340px] flex-shrink-0 overflow-hidden rounded-[16px] border border-white/10 bg-white/5"
+        >
+          <Image src={s.src} alt={s.alt ?? ""} fill className="object-cover" priority={i === 0} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CtaLink({ label, href, variant = "primary" }: Cta) {
+  const base =
+    "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500";
+  const styles =
+    variant === "primary"
+      ? "bg-sky-500 text-black hover:brightness-95"
+      : "border border-sky-500 text-sky-500 hover:bg-sky-500/10";
+  return (
+    <Link href={href} className={`${base} ${styles}`}>
+      {label}
+    </Link>
   );
 }

@@ -85,7 +85,7 @@ export default function Header({
           {logoSrc ? (
             <Image src={logoSrc} alt={logoAlt} width={28} height={28} priority />
           ) : (
-            <span className="grid h-7 w-7 place-items-center rounded-md bg-sky-500 text-white">◆</span>
+            <span className="grid h-7 w-7 place-items-center rounded-md bg-lime-400 text-white">◆</span>
           )}
           <span className="text-base font-bold tracking-tight">{brand}</span>
         </Link>
