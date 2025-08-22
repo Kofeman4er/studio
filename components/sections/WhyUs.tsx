@@ -70,7 +70,8 @@ export default function WhyUs() {
           <table className="min-w-[720px] w-full border-collapse">
             <thead className="bg-slate-50">
               <tr className="text-left text-sm font-semibold text-slate-700">
-                <Th className="w-[36%]">Platform</Th>
+                <Th className="w-[36%]"> </Th>
+                <Th >Platform</Th>
                 <Th>Speed</Th>
                 <Th>Quality</Th>
                 <Th>Support</Th>
@@ -157,7 +158,7 @@ function BadgeCheck({ ariaLabel }: { ariaLabel: string }) {
 function BadgeX({ ariaLabel }: { ariaLabel: string }) {
   return (
     <span
-      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 ring-1 ring-slate-200"
       aria-label={ariaLabel}
       title="No"
     >
