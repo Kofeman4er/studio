@@ -1,5 +1,6 @@
 // components/sections/WhyUs.tsx
 import Link from "next/link";
+import clsx from "clsx";
 
 type Row = {
   platform: string;
@@ -65,12 +66,12 @@ export default function WhyUs() {
           </Link>
         </div>
 
-        {/* Table (scrolls on small screens) */}
+        {/* Table — full width on all screens; scroll remains available if needed */}
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
-          <table className="min-w-[720px] w-full border-collapse">
-            <thead className="bg-slate-50">
-              <tr className="text-left text-sm font-semibold text-slate-700">
-                <Th className="w-[36%]"> </Th>
+          <table className="w-full border-collapse">
+            <thead className="bg-sky-500">
+              <tr className="text-center text-sm font-semibold text-white">
+                <Th className="w-[40%]"> </Th>
                 <Th >Platform</Th>
                 <Th>Speed</Th>
                 <Th>Quality</Th>
@@ -78,30 +79,46 @@ export default function WhyUs() {
                 <Th>Cost</Th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 bg-white">
-              {ROWS.map((row, idx) => (
-                <tr key={row.platform} className="align-top">
-                  <td className="p-5">
-                    <div className="text-slate-900 font-semibold">
-                      {row.platform}
-                    </div>
-                    {row.blurb && (
-                      <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                        {row.blurb}
-                      </p>
-                    )}
-                  </td>
-                  {row.values.map((v, i) => (
-                    <td key={`${row.platform}-${i}`} className="p-5">
-                      {v ? (
-                        <BadgeCheck ariaLabel="Yes" />
-                      ) : (
-                        <BadgeX ariaLabel="No" />
+
+            <tbody className="bg-white">
+              {ROWS.map((row, idx) => {
+                const isFirst = row.platform === "Devsolutify";
+                return (
+                  <tr key={row.platform} className="align-center">
+                    {/* Platform cell */}
+                    <td
+                      className={clsx(
+                        "p-3 sm:p-5",
+                        isFirst && "bg-sky-50 sm:rounded-l-2xl"
+                      )}
+                    >
+                      <div className="font-semibold text-slate-900">
+                        {row.platform}
+                      </div>
+                      {/* hide blurb on small screens */}
+                      {row.blurb && (
+                        <p className="mt-1 hidden text-sm leading-relaxed text-slate-600 sm:block">
+                          {row.blurb}
+                        </p>
                       )}
                     </td>
-                  ))}
-                </tr>
-              ))}
+
+                    {/* Matrix cells */}
+                    {row.values.map((v, i) => (
+                      <td
+                        key={`${row.platform}-${i}`}
+                        className={clsx(
+                          "p-3 text-center sm:p-5",
+                          isFirst && "bg-sky-50",
+                          isFirst && i === row.values.length - 1 && "sm:rounded-r-2xl"
+                        )}
+                      >
+                        {v ? <BadgeCheck ariaLabel="Yes" /> : <BadgeX ariaLabel="No" />}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -124,7 +141,7 @@ function Th({
   className?: string;
 }) {
   return (
-    <th className={`p-4 sm:p-5 ${className}`}>
+    <th className={`p-3 sm:p-5 ${className}`}>
       <span className="inline-block">{children}</span>
     </th>
   );
@@ -158,22 +175,12 @@ function BadgeCheck({ ariaLabel }: { ariaLabel: string }) {
 function BadgeX({ ariaLabel }: { ariaLabel: string }) {
   return (
     <span
-      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 ring-1 ring-slate-200"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200"
       aria-label={ariaLabel}
       title="No"
     >
-      <svg
-        viewBox="0 0 24 24"
-        className="h-4 w-4 text-slate-500"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M8 8l8 8M16 8l-8 8"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
+      <svg viewBox="0 0 24 24" className="h-4 w-4 text-slate-500" fill="none" aria-hidden="true">
+        <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
       </svg>
     </span>
   );
