@@ -4,6 +4,9 @@ import WhyUs from "@/components/sections/WhyUs";
 import ServicesShowcase from "@/components/sections/ServicesShowcase";
 import LogoCloud from "@/components/sections/LogoCloud";
 import CaseStudyTeaser from "@/components/sections/CaseStudyTeaser";
+import About from "@/components/sections/About";
+import ConceptHighlights from "@/components/sections/ConceptHighlights";
+
 
 
 export default function HomePage() {
@@ -21,6 +24,8 @@ export default function HomePage() {
           { src: "/images/hero/slide-3.jpg", alt: "Checkout concept" },
         ]}
       />
+      <About />
+      <ConceptHighlights />
       <WhyUs />
         <div className="mb-12 flex flex-col items-center text-center">
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
