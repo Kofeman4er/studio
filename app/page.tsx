@@ -1,11 +1,12 @@
 // app/page.tsx
 import Hero from "@/components/sections/Hero";
 import WhyUs from "@/components/sections/WhyUs";
-import ServicesShowcase from "@/components/sections/ServicesShowcase";
 import LogoCloud from "@/components/sections/LogoCloud";
 import CaseStudyTeaser from "@/components/sections/CaseStudyTeaser";
 import About from "@/components/sections/About";
 import ConceptHighlights from "@/components/sections/ConceptHighlights";
+import HeroDivider from "@/components/sections/HeroDivider";
+import ServicesShowcaseHome from "@/components/sections/ServicesShowcaseHome";
 
 
 
@@ -24,6 +25,7 @@ export default function HomePage() {
           { src: "/images/hero/slide-3.jpg", alt: "Checkout concept" },
         ]}
       />
+      <HeroDivider />
       <About />
       <ConceptHighlights />
       <WhyUs />
@@ -36,7 +38,7 @@ export default function HomePage() {
           </p>
         </div>
 
-      <ServicesShowcase />
+      <ServicesShowcaseHome />
 
     </>
   );
