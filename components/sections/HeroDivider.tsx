@@ -15,11 +15,7 @@ export default function HeroDivider() {
       {/* Black → White gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#000000] via-[#0b0b0b] to-white" />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-4 py-8 sm:py-10">
-        <p className="text-xs font-semibold uppercase tracking-wider text-white/80">
-          Trusted by
-        </p>
-
+      <div className="relative mx-auto w-full max-w-[1400px] py-8 sm:py-10">
         {/* Marquee container */}
         <div
           className="mt-4 h-14 sm:h-16 overflow-hidden"
@@ -36,7 +32,6 @@ export default function HeroDivider() {
             style={
               {
                 width: "200%",
-                // consumed in global CSS below
                 "--marquee-duration": "28s",
               } as React.CSSProperties
             }
@@ -54,15 +49,14 @@ export default function HeroDivider() {
 
 function Sequence({ logos }: { logos: Logo[] }) {
   return (
-    <div className="marquee-group flex w-1/2 items-center justify-around gap-10 flex-shrink-0">
+    <div className="lg:mr-40 lg:ml-40 sm:mr-10 sm:ml-10 marquee-group flex w-1/2 flex-shrink-0 items-center justify-between gap-2 sm:gap-8 md:gap-10 px-2">
       {logos.map((l, i) => (
-        <div key={`${l.src}-${i}`} className="flex-none">
+        <div key={`${l.src}-${i}`} className="shrink-0">
           <img
             src={l.src}
             alt={l.alt}
-            height={32}
-            className="h-8 sm:h-9 w-auto object-contain brightness-0 invert opacity-90"
             loading="lazy"
+            className="block h-12 sm:h-7 md:h-8 w-auto max-w-[10vw] sm:max-w-none object-contain brightness-0 invert opacity-90"
           />
         </div>
       ))}
@@ -78,14 +72,9 @@ function StyleBlock() {
         will-change: transform;
       }
       @keyframes hero-marquee {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
       }
-      /* Respect user motion preferences */
       @media (prefers-reduced-motion: reduce) {
         .marquee-track {
           animation: none !important;
