@@ -1,4 +1,6 @@
 // components/sections/WhyUs.tsx
+"use client";
+
 import Link from "next/link";
 import clsx from "clsx";
 import { CircleCheck, CircleX } from "lucide-react";
@@ -72,7 +74,8 @@ export default function WhyUs() {
           <table className="w-full border-collapse text-sm lg:text-xs">
             <thead className="bg-sky-900">
               <tr className="text-center font-semibold text-white">
-                <Th className="w-[38%] lg:w-[32%] text-left" children={undefined}></Th>
+                {/* empty header cell for the row labels */}
+                <Th className="w-[38%] lg:w-[32%] text-left" />
                 <Th>Platform</Th>
                 <Th>Speed</Th>
                 <Th>Quality</Th>
@@ -87,11 +90,7 @@ export default function WhyUs() {
                 return (
                   <tr key={row.platform}>
                     {/* Platform cell */}
-                    <td
-                      className={clsx(
-                        "align-top p-3 sm:p-4 lg:p-2.5 bg-white"
-                      )}
-                    >
+                    <td className={clsx("align-top p-3 sm:p-4 lg:p-2.5 bg-white")}>
                       <div className="font-semibold text-slate-900 text-sm lg:text-xs">
                         {row.platform}
                       </div>
@@ -139,8 +138,7 @@ export default function WhyUs() {
         </div>
 
         <p className="mt-3 text-center text-xs text-slate-500">
-          Checks indicate a strong fit for everyday, growth-focused Shopify
-          needs.
+          Checks indicate a strong fit for everyday, growth-focused Shopify needs.
         </p>
       </div>
     </section>
@@ -152,12 +150,12 @@ function Th({
   children,
   className = "",
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode; // made optional to allow <Th />
   className?: string;
 }) {
   return (
     <th className={`p-3 sm:p-4 lg:p-2.5 ${className}`}>
-      <span className="inline-block">{children}</span>
+      {children ? <span className="inline-block">{children}</span> : null}
     </th>
   );
 }

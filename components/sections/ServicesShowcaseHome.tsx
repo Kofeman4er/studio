@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
     Code,
@@ -12,238 +11,320 @@ import {
     BarChart3,
     Plug,
 } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 type Service = {
     title: string;
     href: string;
-    image: string;
-    tags?: string[];
+    image: string; // path from /public
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    tall?: boolean;
+    blurb?: string; // shown on hover
 };
 
 const SERVICES: Service[] = [
-    { title: "Custom Development", href: "/services#custom-dev", image: "/images/services/custom-dev_home.jpg", icon: Code, tags: ["#APPS", "#CUSTOM"], tall: true },
-    { title: "Theme Design", href: "/services#themes", image: "/images/services/themes_home.jpg", icon: MonitorSmartphone, tags: ["#UI", "#UX"] },
-    { title: "Shopify Plus", href: "/services#shopify-plus", image: "/images/services/plus_home.jpg", icon: ShoppingCart, tags: ["#PLUS", "#B2B"], tall: true },
-    { title: "Migrations", href: "/services#migrations", image: "/images/services/migrations_home.jpg", icon: Rocket, tags: ["#REPLATFORM"] },
-    { title: "Apps & Integrations", href: "/services#apps", image: "/images/services/apps_home.jpg", icon: Plug, tags: ["#API"], tall: true },
-    { title: "CRO & Optimization", href: "/services#cro", image: "/images/services/cro_home.jpg", icon: BarChart3, tags: ["#A/B", "#SPEED"] },
-    { title: "Support & Maintenance", href: "/services#support", image: "/images/services/support_home.jpg", icon: Wrench, tags: ["#RETENTION"], tall: true },
-    { title: "Headless / Hydrogen", href: "/services#custom-dev", image: "/images/services/headless_home.jpg", icon: Layers, tags: ["#HEADLESS"] },
+    { title: "Custom Development", href: "/services#custom-dev", image: "/images/services/custom-dev_home.jpg", icon: Code, blurb: "Tailored Shopify features, sections and workflows that fit your brand." },
+    { title: "Theme Design", href: "/services#themes", image: "/images/services/themes_home.jpg", icon: MonitorSmartphone, blurb: "Modern, fast themes crafted for conversion and maintainability." },
+    { title: "Shopify Plus", href: "/services#shopify-plus", image: "/images/services/plus_home.jpg", icon: ShoppingCart, blurb: "Advanced capabilities, checkout customizations, and scale-ready setups." },
+    { title: "Migrations", href: "/services#migrations", image: "/images/services/migrations_home.jpg", icon: Rocket, blurb: "Seamless moves to Shopify with data integrity and zero lost SEO." },
+    { title: "Apps & Integrations", href: "/services#apps", image: "/images/services/apps_home.jpg", icon: Plug, blurb: "Connect your stack—Klaviyo, Algolia, ERPs, 3PLs, and more." },
+    { title: "CRO & Optimization", href: "/services#cro", image: "/images/services/cro_home.jpg", icon: BarChart3, blurb: "Test, measure, and iterate to lift revenue and AOV." },
+    { title: "Support & Maintenance", href: "/services#support", image: "/images/services/support_home.jpg", icon: Wrench, blurb: "Reliable monthly support for fixes, tweaks, and small wins." },
+    { title: "Headless / Hydrogen", href: "/services#custom-dev", image: "/images/services/headless_home.jpg", icon: Layers, blurb: "Composable storefronts for performance and flexibility." },
 ];
 
+// Animation tuning
+const PX_PER_SEC = 14; // slow, gentle auto-scroll
+const RESUME_IDLE_MS = 1200;
+
 export default function ServicesShowcaseHome() {
-    const copies = 3; // middle + guards for seamless loop
-    const items = useMemo(() => Array.from({ length: copies }, () => SERVICES).flat(), []);
-    const trackRef = useRef<HTMLDivElement>(null);
-    const [paused, setPaused] = useState(false);
-
-    // translateX state (in px, negative moves left)
-    const x = useRef(0);
-    const seqWidth = useRef(0);
-    const oneSeqWidth = useRef(0);
-
-    // pointer drag state
-    const drag = useRef({
-        down: false,
-        startX: 0,
-        startXVal: 0,
-        moved: 0,
-        downTarget: null as null | HTMLElement,
-    });
-
-    // measure one sequence width once images/layout are ready
-    useEffect(() => {
-        const measure = () => {
-            const track = trackRef.current;
-            if (!track) return;
-            // width of ONE sequence = total / copies
-            const total = track.scrollWidth;
-            if (!total) return;
-            oneSeqWidth.current = total / copies;
-            seqWidth.current = total;
-            // start from the middle copy
-            x.current = -oneSeqWidth.current;
-            track.style.transform = `translate3d(${x.current}px,0,0)`;
-        };
-        measure();
-        const ro = new ResizeObserver(measure);
-        if (trackRef.current) ro.observe(trackRef.current);
-        return () => ro.disconnect();
-    }, []);
-
-    // infinite loop using translateX
-    useEffect(() => {
-        let raf = 0;
-        const speed = 0.25; // very slow
-
-        const tick = () => {
-            const track = trackRef.current;
-            if (!track || !oneSeqWidth.current) {
-                raf = requestAnimationFrame(tick);
-                return;
-            }
-
-            if (!paused && !drag.current.down) {
-                x.current -= speed; // right -> left
-            }
-
-            // wrap into middle band for endlessness
-            const min = -oneSeqWidth.current * 2;
-            const max = 0;
-            if (x.current <= min) x.current += oneSeqWidth.current;
-            else if (x.current >= max) x.current -= oneSeqWidth.current;
-
-            track.style.transform = `translate3d(${x.current}px,0,0)`;
-            raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(raf);
-    }, [paused]);
-
-    // pointer drag handlers
-    const TAP_SLOP = 12; // px
-
-    const onPointerDown = (e: React.PointerEvent) => {
-        const track = trackRef.current!;
-        track.setPointerCapture(e.pointerId);
-        drag.current = {
-            down: true,
-            startX: e.clientX,
-            startXVal: x.current,
-            moved: 0,
-            downTarget: e.target as HTMLElement,
-        };
-        setPaused(true);
-        track.classList.add("cursor-grabbing");
-    };
-
-    const onPointerMove = (e: React.PointerEvent) => {
-        if (!drag.current.down || !oneSeqWidth.current || !trackRef.current) return;
-        const dx = e.clientX - drag.current.startX;
-        drag.current.moved = Math.max(drag.current.moved, Math.abs(dx));
-        x.current = drag.current.startXVal + dx;
-        trackRef.current.style.transform = `translate3d(${x.current}px,0,0)`;
-        // prevent text/image drag selection on desktop while moving
-        e.preventDefault();
-    };
-
-    const onPointerEnd = (e?: React.PointerEvent) => {
-        if (!drag.current.down) return;
-        const wasTap = drag.current.moved < TAP_SLOP;
-        const targetAtDown = drag.current.downTarget;
-        drag.current.down = false;
-        trackRef.current?.classList.remove("cursor-grabbing");
-
-        // If it was a tap (not a drag), follow the link that was tapped.
-        if (wasTap && targetAtDown) {
-            const link = targetAtDown.closest("a[href]") as HTMLAnchorElement | null;
-            if (link) {
-                // Let Next.js handle it if it's an internal link; otherwise native click
-                link.click();
-            }
-        }
-
-        // resume auto-scroll after a short idle
-        window.setTimeout(() => setPaused(false), 600);
-    };
-
     return (
         <section className="relative border-t border-slate-200 bg-white">
             <div className="container mx-auto px-4 py-14">
                 {/* Centered header */}
-                <div className="mb-8 flex flex-col items-center text-center">
+                <div className="mb-8 text-center">
                     <p className="text-xs font-semibold uppercase tracking-wider text-sky-700">Services</p>
                     <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
                         Everything you need, in one creative stack
                     </h2>
-                    <p className="mt-2 max-w-[56ch] text-sm text-slate-600">
+                    <p className="mt-2 text-sm text-slate-600">
                         Slow auto-scroll, drag or swipe to explore. It’s endless.
                     </p>
                 </div>
 
-                <div className="relative">
-                    {/* edge fades */}
-                    <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent" />
-                    <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent" />
+                {/* Carousel */}
+                <EndlessCarousel items={SERVICES} />
 
-                    {/* viewport */}
-                    <div
-                        className="select-none overflow-hidden pb-2"
-                        onMouseEnter={() => setPaused(true)}
-                        onMouseLeave={() => setPaused(false)}
+                {/* CTA */}
+                <div className="mt-8 flex justify-center">
+                    <Link
+                        href="/services"
+                        className="cursor-pointer rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
                     >
-                        {/* track */}
-                        <div
-                            ref={trackRef}
-                            className="flex gap-3 will-change-transform cursor-grab"
-                            onPointerDown={onPointerDown}
-                            onPointerMove={onPointerMove}
-                            onPointerUp={onPointerEnd}
-                            onPointerCancel={onPointerEnd}
-                            style={{ touchAction: "pan-y" }}
-                        >
-                            {Array.from({ length: copies }).map((_, copyIdx) => (
-                                <Sequence key={copyIdx} items={SERVICES} eager={copyIdx === 1 /* middle copy */} />
-                            ))}
-                        </div>
-                    </div>
+                        Explore all services
+                    </Link>
                 </div>
             </div>
         </section>
     );
 }
 
-function Sequence({ items, eager }: { items: Service[]; eager?: boolean }) {
+function EndlessCarousel({ items }: { items: Service[] }) {
+    const viewportRef = useRef<HTMLDivElement | null>(null);
+    const trackRef = useRef<HTMLDivElement | null>(null);
+    const seqRef = useRef<HTMLDivElement | null>(null);
+
+    // animation refs
+    const offsetRef = useRef<number>(0);
+    const speedRef = useRef<number>(-PX_PER_SEC);
+    const lastTsRef = useRef<number>(0);
+    const draggingRef = useRef<boolean>(false);
+    const dragStartXRef = useRef<number>(0);
+    const dragStartOffsetRef = useRef<number>(0);
+    const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const rafRef = useRef<number | null>(null);
+    const sequenceWidthRef = useRef<number>(0);
+    const hoveringRef = useRef<boolean>(false); // <- track hover state
+
+    // Measure sequence width
+    useEffect(() => {
+        const measure = () => {
+            if (seqRef.current) {
+                sequenceWidthRef.current = seqRef.current.getBoundingClientRect().width;
+            }
+        };
+        measure();
+        const onResize = () => measure();
+        window.addEventListener("resize", onResize, { passive: true });
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    // rAF loop
+    useEffect(() => {
+        const tick = (ts: number) => {
+            const last = lastTsRef.current || ts;
+            const dt = (ts - last) / 1000;
+            lastTsRef.current = ts;
+
+            if (!draggingRef.current) {
+                offsetRef.current += speedRef.current * dt;
+
+                const seqW = sequenceWidthRef.current;
+                if (seqW > 0) {
+                    if (offsetRef.current <= -seqW) offsetRef.current += seqW;
+                    if (offsetRef.current > 0) offsetRef.current -= seqW;
+                }
+                applyTransform();
+            }
+
+            rafRef.current = requestAnimationFrame(tick);
+        };
+
+        rafRef.current = requestAnimationFrame(tick);
+        return () => {
+            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+        };
+    }, []);
+
+    const applyTransform = () => {
+        if (trackRef.current) {
+            trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
+        }
+    };
+
+    // Pointer drag handlers
+    useEffect(() => {
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+
+        const clearResumeTimer = () => {
+            if (resumeTimerRef.current) {
+                clearTimeout(resumeTimerRef.current);
+                resumeTimerRef.current = null;
+            }
+        };
+
+        const onPointerDown = (e: PointerEvent) => {
+            if (e.button !== 0 && e.pointerType === "mouse") return;
+            draggingRef.current = true;
+            viewport.setPointerCapture(e.pointerId);
+            dragStartXRef.current = e.clientX;
+            dragStartOffsetRef.current = offsetRef.current;
+
+            // pause auto
+            speedRef.current = 0;
+            clearResumeTimer();
+
+            viewport.classList.add("is-dragging");
+        };
+
+        const onPointerMove = (e: PointerEvent) => {
+            if (!draggingRef.current) return;
+            const dx = e.clientX - dragStartXRef.current;
+            offsetRef.current = dragStartOffsetRef.current + dx;
+
+            const seqW = sequenceWidthRef.current;
+            if (seqW > 0) {
+                while (offsetRef.current <= -seqW) offsetRef.current += seqW;
+                while (offsetRef.current > 0) offsetRef.current -= seqW;
+            }
+            applyTransform();
+        };
+
+        const onPointerUp = (e: PointerEvent) => {
+            if (!draggingRef.current) return;
+            draggingRef.current = false;
+            viewport.releasePointerCapture(e.pointerId);
+
+            clearResumeTimer();
+            // Only resume if NOT hovered
+            if (!hoveringRef.current) {
+                resumeTimerRef.current = setTimeout(() => {
+                    if (!hoveringRef.current) {
+                        speedRef.current = -PX_PER_SEC;
+                    }
+                    resumeTimerRef.current = null;
+                }, RESUME_IDLE_MS);
+            }
+
+            // avoid accidental click post-drag
+            setTimeout(() => viewport.classList.remove("is-dragging"), 0);
+        };
+
+        viewport.addEventListener("pointerdown", onPointerDown);
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        window.addEventListener("pointerup", onPointerUp, { passive: true });
+
+        return () => {
+            viewport.removeEventListener("pointerdown", onPointerDown);
+            window.removeEventListener("pointermove", onPointerMove);
+            window.removeEventListener("pointerup", onPointerUp);
+        };
+    }, []);
+
+    // HOVER PAUSE: stop moving on hover over the whole carousel viewport
+    const handleMouseEnter = () => {
+        hoveringRef.current = true;
+        if (resumeTimerRef.current) {
+            clearTimeout(resumeTimerRef.current);
+            resumeTimerRef.current = null;
+        }
+        speedRef.current = 0;
+    };
+
+    const handleMouseLeave = () => {
+        hoveringRef.current = false;
+        if (!draggingRef.current) {
+            speedRef.current = -PX_PER_SEC;
+        }
+    };
+
     return (
-        <>
-            {items.map((s, i) => (
-                <Card key={s.title + i + (eager ? "-e" : "-l")} s={s} eager={eager && i < 12} />
-            ))}
-        </>
+        <div className="relative">
+            {/* Edge fades */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent"
+            />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent"
+            />
+
+            {/* Viewport */}
+            <div
+                ref={viewportRef}
+                className="overflow-hidden touch-pan-y select-none cursor-default"
+                style={{ WebkitOverflowScrolling: "auto" }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                {/* Track: two sequences side-by-side */}
+                <div
+                    ref={trackRef}
+                    className="flex will-change-transform"
+                    style={{ transform: "translateX(0px)" }}
+                >
+                    <Sequence refEl={seqRef} items={items} />
+                    <Sequence items={items} ariaHidden />
+                </div>
+            </div>
+
+            <style jsx>{`
+        .is-dragging a {
+          pointer-events: none;
+        }
+      `}</style>
+        </div>
     );
 }
 
-function Card({ s, eager }: { s: Service; eager?: boolean }) {
-    const Icon = s.icon;
-    const baseHeight = s.tall ? "h-[280px]" : "h-[220px]"; // smaller images
-
+function Sequence({
+    items,
+    ariaHidden = false,
+    refEl,
+}: {
+    items: Service[];
+    ariaHidden?: boolean;
+    refEl?: React.MutableRefObject<HTMLDivElement | null>;
+}) {
     return (
-        <Link href={s.href} className="pr-1" aria-label={s.title} draggable={false}>
-            <div className="flex w-[240px] sm:w-[280px] lg:w-[300px] flex-col gap-3">
-                <div className={`overflow-hidden rounded-[16px] ${baseHeight} [contain:paint]`}>
-                    <img
-                        src={s.image}
-                        alt={s.title}
-                        draggable={false}
-                        // Preload the middle copy to avoid “loading in while dragging”
-                        loading={eager ? "eager" : "lazy"}
-                        decoding="async"
-                        {...(eager ? { fetchPriority: "high" as any } : {})}
-                        className="h-full w-full rounded-[16px] object-cover transition-transform duration-500 ease-in-out will-change-transform hover:scale-105"
-                    />
-                </div>
+        <div
+            ref={refEl ?? null}
+            className="flex items-stretch gap-4 pr-4"
+            aria-hidden={ariaHidden || undefined}
+        >
+            {items.map((s) => (
+                <ServiceCard key={`${s.title}-${s.href}-${ariaHidden ? "dup" : "orig"}`} service={s} />
+            ))}
+        </div>
+    );
+}
 
-                <div className="flex flex-col gap-2">
-                    <h6 className="text-[15px] font-semibold leading-relaxed text-slate-900">
-                        <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-sky-50 ring-1 ring-sky-100 align-[-2px]">
-                            <Icon className="h-3.5 w-3.5 text-sky-600" />
-                        </span>
-                        {s.title}
-                    </h6>
-                    {!!s.tags?.length && (
-                        <div className="flex flex-wrap gap-1.5">
-                            {s.tags.map((t) => (
-                                <span
-                                    key={t}
-                                    className="rounded-[40px] bg-slate-900/[0.03] px-2.5 py-[2px] text-[11px] text-slate-700 ring-1 ring-slate-200"
-                                >
-                                    {t}
-                                </span>
-                            ))}
+function ServiceCard({ service }: { service: Service }) {
+    const Icon = service.icon;
+    return (
+        <Link
+            href={service.href}
+            className="group block w-[240px] sm:w-[280px] md:w-[300px] flex-none cursor-default"
+            aria-label={service.title}
+            draggable={false}
+        >
+            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                {/* Image area with stylish blurb overlay */}
+                <div className="relative h-[160px] sm:h-[180px] md:h-[190px] overflow-hidden">
+                    <img
+                        src={service.image}
+                        alt={service.title}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        draggable={false}
+                        loading="lazy"
+                    />
+
+                    {/* bottom fade */}
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/20 to-transparent" />
+
+                    {/* BLURB: glass card with ring + shadow, fades & slides up on hover */}
+                    {service.blurb && (
+                        <div className="absolute inset-0 flex items-end p-3">
+                            <div className="pointer-events-none translate-y-2 opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="rounded-lg bg-white/80 backdrop-blur-md ring-1 ring-slate-200 shadow-lg px-3 py-2">
+                                    <p className="text-[13px] leading-snug text-slate-900">
+                                        {service.blurb}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     )}
+                </div>
+
+                {/* Caption */}
+                <div className="flex items-center gap-3 rounded-b-xl bg-white/90 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-50 ring-1 ring-sky-100">
+                        <Icon className="h-4 w-4 text-sky-600" aria-hidden="true" />
+                    </span>
+                    <p className="flex-1 truncate text-sm font-semibold text-slate-900">
+                        {service.title}
+                    </p>
                 </div>
             </div>
         </Link>
