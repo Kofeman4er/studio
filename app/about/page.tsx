@@ -35,7 +35,7 @@ const VALUES = [
   },
   {
     title: "Clear communication",
-    desc: "No black boxes—roadmaps, demos, and async updates you can trust.",
+    desc: "No black boxes. Roadmaps, demos, and async updates you can trust.",
     icon: Info,
   },
   {
@@ -179,7 +179,7 @@ export default function Page() {
               but also drives real results.
               <br />
               <br />
-              We’re here to bridge the gap between design, technology, and business goals —
+              We’re here to bridge the gap between design, technology, and business goals -
               crafting online experiences that inspire trust, delight customers, and convert visitors
               into loyal buyers.
               <br />
@@ -188,7 +188,7 @@ export default function Page() {
               that grow with you, adapt to your vision, and stand out in a competitive market.
               <br />
               <br />
-              Because your success isn’t just our work — it’s our purpose.
+              Because your success isn’t just our work - it’s our purpose.
             </p>
             <div className="mt-6">
               <Button asChild href="/services" >
@@ -231,7 +231,7 @@ export default function Page() {
               The people behind the work
             </h2>
             <p className="mt-2 text-slate-600">
-              Senior talent across design, engineering, and delivery—small on purpose.
+              Senior talent across design, engineering, and delivery.
             </p>
           </div>
 
@@ -314,6 +314,37 @@ export default function Page() {
 }
 
 /* --------- helpers --------- */
+function Ribbon() {
+  return (
+    <div className="relative mx-auto mt-12 max-w-5xl overflow-hidden bg-white">
+      <div
+        className="marquee-track flex items-center gap-6 opacity-90"
+        style={{ ["--speed" as any]: "40s" }}
+        aria-hidden
+      >
+        {/* duplicate the same sequence twice */}
+        <RibbonSequence />
+        <RibbonSequence />
+      </div>
+
+      <style jsx>{`
+        .marquee-track {
+          animation: ribbon-marquee var(--speed, 40s) linear infinite;
+          will-change: transform;
+        }
+        @keyframes ribbon-marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 function RibbonSequence() {
   const items = [
     { icon: ShoppingBag, label: "Shopify" },
@@ -327,13 +358,13 @@ function RibbonSequence() {
   ];
 
   return (
-    <div className="flex w-1/2 flex-shrink-0 items-center gap-2 px-2">
+    <div className="flex flex-none items-center gap-3 px-3">
       {items.map((it, i) => {
         const Icon = it.icon;
         return (
           <div
             key={`${it.label}-${i}`}
-            className="flex h-12 flex-none items-center gap-2 rounded-[14px] border-2 border-white/90 bg-transparent px-3 shadow-[0_0_0_1px_rgba(15,23,42,0.06)]"
+            className="flex shrink-0 items-center gap-2 rounded-[14px] border-2 border-white/90 bg-transparent px-3 py-2 shadow-sm"
           >
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/70 ring-1 ring-white/80 backdrop-blur">
               <Icon className="h-4 w-4 text-slate-900" aria-hidden />
@@ -347,3 +378,4 @@ function RibbonSequence() {
     </div>
   );
 }
+

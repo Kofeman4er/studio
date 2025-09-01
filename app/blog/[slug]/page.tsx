@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { POSTS } from "@/lib/posts"; // ensure this exports an array with { slug, title, excerpt, date, author, image, content }
+import { POSTS } from "@/lib/posts";
 
 function formatDate(isoOrPretty: string): string {
   const d = new Date(isoOrPretty);
@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = POSTS.find((p) => p.slug === slug);
   if (!post) return { title: "Post not found — Blog" };
 
-  // If you've set metadataBase in app/layout.tsx, relative URLs here will resolve correctly.
   const ogImage = post.image ? [{ url: post.image }] : undefined;
 
   return {
@@ -69,15 +68,17 @@ export default async function Page({ params }: Props) {
         </div>
 
         {post.image && (
-          <div className="relative mt-6 overflow-hidden rounded-2xl border border-slate-200">
-            <Image
-              src={post.image}
-              alt={post.title}
-              width={1600}
-              height={900}
-              className="h-auto w-full object-cover"
-              priority
-            />
+          <div className="mx-auto mt-6 max-w-2xl sm:max-w-3xl">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                sizes="(min-width:1024px) 48rem, 92vw"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         )}
       </header>
