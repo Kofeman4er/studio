@@ -8,7 +8,7 @@ import { CircleCheck, CircleX } from "lucide-react";
 type Row = {
   platform: string;
   blurb?: string;
-  values: [boolean, boolean, boolean, boolean, boolean]; // Platform, Speed, Quality, Support, Cost
+  values: [boolean, boolean, boolean, boolean]; // Speed, Quality, Support, Cost
 };
 
 const ROWS: Row[] = [
@@ -16,31 +16,31 @@ const ROWS: Row[] = [
     platform: "Devsolutify",
     blurb:
       "Your on-demand Shopify partner for fast delivery, consistent quality, and predictable pricing.",
-    values: [true, true, true, true, true],
+    values: [true, true, true, true],
   },
   {
     platform: "In-house team",
     blurb:
       "Hiring takes time, replacements are slow, and ongoing salaries make in-house design costly, especially when needs fluctuate.",
-    values: [false, false, true, true, true],
+    values: [false, true, true, true],
   },
   {
     platform: "Freelancers",
     blurb:
       "Hit or miss. Sourcing and managing talent for every project keeps you chasing consistency, not building your brand.",
-    values: [false, false, true, true, false],
+    values: [false, true, true, false],
   },
   {
     platform: "Agencies",
     blurb:
       "Strategic partners, but high-cost retainers, rigid scopes, and slow timelines make them a poor fit for everyday creative needs.",
-    values: [false, false, true, true, false],
+    values: [false, true, true, false],
   },
   {
     platform: "DIY Tools",
     blurb:
       "Quick to use — but the output is off-brand, inconsistent, and still needs heavy manual effort to finish.",
-    values: [true, true, false, false, false],
+    values: [true, false, false, false],
   },
 ];
 
@@ -76,7 +76,6 @@ export default function WhyUs() {
               <tr className="text-center font-semibold text-white">
                 {/* empty header cell for the row labels */}
                 <Th className="w-[38%] lg:w-[32%] text-left" />
-                <Th>Platform</Th>
                 <Th>Speed</Th>
                 <Th>Quality</Th>
                 <Th>Support</Th>
