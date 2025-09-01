@@ -30,7 +30,7 @@ const VALUES = [
   },
   {
     title: "Speed with quality",
-    desc: "Tight feedback loops, performance budgets, and a11y baked in.",
+    desc: "Tight feedback loops, performance budgets, and it's all about us.",
     icon: Gem,
   },
   {

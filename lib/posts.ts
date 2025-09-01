@@ -52,7 +52,7 @@ export const POSTS: Post[] = [
     image: "/images/blog/migration.png",
     content: [
       "Migrations are risk management: preserve SEO, analytics, and operations while improving performance.",
-      "Inventory URLs and create a redirect map—test thoroughly on staging.",
+      "Inventory URLs and create a redirect map test thoroughly on staging.",
       "Ensure analytics parity (GA4/pixels) and validate events post-cutover.",
       "Pick a low-traffic cutover window, monitor, and keep a rollback plan ready.",
     ],
@@ -60,7 +60,7 @@ export const POSTS: Post[] = [
   {
   "slug": "costs",
   "title": "When ‘free’ isn’t free: managing surprise costs from Shopify apps and themes",
-  "excerpt": "Why it matters: Many merchants find themselves paying for multiple apps and premium themes just to add basic features—sometimes costing more than the Shopify plan itself.",
+  "excerpt": "Why it matters: Many merchants find themselves paying for multiple apps and premium themes just to add basic features sometimes costing more than the Shopify plan itself.",
   "date": "2025-08-05",
   "author": "Jane Doe",
   "image": "/images/blog/when-free-isnt-free.png",
@@ -71,13 +71,12 @@ export const POSTS: Post[] = [
     "👉 Upgrades that lock essential features behind costly plans.",
     "These surprise expenses can quietly balloon your monthly costs and eat into your margins.",
     "💡 Here are a few ways to manage them:",
-    "1. Audit your apps regularly – remove what you don’t use.",
-    "2. Prioritize multifunction apps – one tool that solves multiple needs.",
-    "3. Customize your theme smartly – avoid relying too much on paid add-ons.",
-    "4. Watch free trials – set reminders before they convert into charges.",
-    "5. Plan for scaling – check how pricing changes as your store grows.",
-    "At the end of the day, “free” isn’t always free—but with careful planning, you can keep your store lean, efficient, and cost-effective.",
-    "✨ How do you manage Shopify’s app & theme costs in your store?"
+    "1. Audit your apps regularly - remove what you don’t use.",
+    "2. Prioritize multifunction apps - one tool that solves multiple needs.",
+    "3. Customize your theme smartly - avoid relying too much on paid add-ons.",
+    "4. Watch free trials - set reminders before they convert into charges.",
+    "5. Plan for scaling - check how pricing changes as your store grows.",
+    "At the end of the day, “free” isn’t always free, but with careful planning, you can keep your store lean, efficient, and cost-effective.",
   ]
 }
 ];

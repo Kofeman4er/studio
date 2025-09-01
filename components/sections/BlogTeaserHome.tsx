@@ -22,7 +22,7 @@ export default function BlogTeaserHome({ className }: { className?: string }) {
             Shopify ideas, guides & playbooks
           </h2>
           <p className="mt-3 max-w-2xl text-slate-600">
-            Practical, no-fluff content from our team—covering performance, CRO, apps, and
+            Practical, no-fluff content from our team covering performance, CRO, apps, and
             workflow tips for growing Shopify brands.
           </p>
 
