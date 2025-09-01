@@ -319,7 +319,7 @@ function Ribbon() {
     <div className="relative mx-auto mt-12 max-w-5xl overflow-hidden bg-white">
       <div
         className="marquee-track flex items-center gap-6 opacity-90"
-        style={{ ["--speed" as any]: "40s" }}
+        style={{ "--speed": "40s" } as React.CSSProperties}
         aria-hidden
       >
         {/* duplicate the same sequence twice */}

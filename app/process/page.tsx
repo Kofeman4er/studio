@@ -445,7 +445,7 @@ function Ribbon() {
 
       <div
         className="process-marquee flex items-center gap-4 opacity-90"
-        style={{ ["--speed" as any]: "36s" }}
+        style={{ "--speed": "36s" } as React.CSSProperties}
         aria-hidden
       >
         <RibbonSequence items={items} />
