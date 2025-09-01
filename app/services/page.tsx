@@ -6,7 +6,7 @@ import ServiceDetail from "@/components/sections/ServiceDetail";
 import type { ServiceDetailProps } from "@/components/sections/ServiceDetail";
 
 export const metadata: Metadata = {
-  title: "Services — Your Agency | Shopify Design, Development, Plus, Apps",
+  title: "Services Devsolutify | Shopify Design, Development, Plus, Apps",
   description:
     "Full-stack Shopify services: custom development, Shopify Plus, theme design, migrations, apps & API integrations, CRO, and ongoing support.",
 };
@@ -32,7 +32,7 @@ const DETAILS: Detail[] = [
   {
     id: "shopify-plus",
     title: "Complex operations on Shopify Plus, simplified",
-    lead: "Enterprise architecture, international stores, and B2B—built to scale.",
+    lead: "Enterprise architecture, international stores, and B2B built to scale.",
     body:
       "From multi-region catalogs to checkout extensibility and B2B pricing, we ship Plus solutions that balance power and maintainability.",
     bullets: [
@@ -49,7 +49,7 @@ const DETAILS: Detail[] = [
     title: "Theme design that looks great and converts",
     lead: "Design systems and custom themes that balance brand and performance.",
     body:
-      "From research and wireframes to polished UI, we build section-first themes your team can update without dev help—fast, accessible, and responsive across devices.",
+      "From research and wireframes to polished UI, we build section-first themes your team can update without dev help fast, accessible, and responsive across devices.",
     bullets: [
       "UX research, wireframes, and high-fidelity UI",
       "Reusable sections/blocks with design tokens",
@@ -62,7 +62,7 @@ const DETAILS: Detail[] = [
   {
     id: "migrations",
     title: "Zero-drama migrations to Shopify",
-    lead: "Replatform from WooCommerce, Magento, BigCommerce, or custom stacks—without losing SEO.",
+    lead: "Replatform from WooCommerce, Magento, BigCommerce, or custom stacks without losing SEO.",
     body:
       "We plan redirects, map data, preserve analytics, and orchestrate a clean cutover so your traffic and revenue stay intact while performance improves.",
     bullets: [
@@ -109,7 +109,7 @@ const DETAILS: Detail[] = [
     title: "Support & maintenance",
     lead: "Reliable retainers for updates, security, and proactive improvements.",
     body:
-      "From small enhancements to roadmap delivery, we operate like your product team—prioritized sprints, SLAs, and transparent reporting.",
+      "From small enhancements to roadmap delivery, we operate like your product team-prioritized sprints, SLAs, and transparent reporting.",
     bullets: [
       "SLA-based support with clear response times",
       "Quarterly roadmaps & sprint execution",
@@ -172,7 +172,7 @@ export default function Page() {
             Shopify services for growth
           </h1>
           <p className="mt-3 max-w-2xl text-slate-600">
-            Strategy, design, development, and optimization—so your storefront
+            Strategy, design, development, and optimization - so your storefront
             converts better, ships faster, and scales cleanly.
           </p>
 
@@ -205,13 +205,13 @@ export default function Page() {
       </section>
 
       {/* Testimonials */}
-      <Testimonials
+      {/*<Testimonials
         eyebrow="Client feedback"
         heading="Merchants love working with us"
         subheading="Here’s what a few Shopify brands say about our services."
         testimonials={SERVICE_TESTIMONIALS}
         columns={2}
-      />
+      />*/}
     </>
   );
 }

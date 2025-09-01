@@ -39,7 +39,7 @@ const ROWS: Row[] = [
   {
     platform: "DIY Tools",
     blurb:
-      "Quick to use — but the output is off-brand, inconsistent, and still needs heavy manual effort to finish.",
+      "Quick to use - but the output is off-brand, inconsistent, and still needs heavy manual effort to finish.",
     values: [true, false, false, false],
   },
 ];

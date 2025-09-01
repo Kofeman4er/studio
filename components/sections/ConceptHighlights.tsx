@@ -13,7 +13,7 @@ type Item = {
 
 const ITEMS: Item[] = [
   {
-    title: "OKI9 — Minimalist Fashion Concept",
+    title: "OKI9 - Minimalist Fashion Concept",
     url: "https://portfolio-oki9.vercel.app",
     caption:
       "Concept storefront focusing on typography, airy layouts, and fast navigation.",
@@ -21,7 +21,7 @@ const ITEMS: Item[] = [
     tags: ["Concept", "Theme", "UX"],
   },
   {
-    title: "Mechanic — Tools & Parts Concept",
+    title: "Mechanic - Tools & Parts Concept",
     url: "https://mechanic-portfolio.vercel.app",
     caption:
       "Industrial look, robust filtering, and clear CTAs for conversion-ready PDPs.",
@@ -29,7 +29,7 @@ const ITEMS: Item[] = [
     tags: ["Concept", "Collection UX", "PDP"],
   },
   {
-    title: "Leather Master — Premium Goods Concept",
+    title: "Leather Master - Premium Goods Concept",
     url: "https://leather-master.vercel.app/",
     caption:
       "Rich editorial visuals, section-driven homepage, and lifestyle storytelling.",

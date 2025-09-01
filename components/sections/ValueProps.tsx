@@ -136,7 +136,7 @@ export function ValueProps() {
         <ValueCard
           icon={Store}
           title="Shopify specialization"
-          blurb="Deep platform knowledge—Liquid, App Extensions, Checkout Extensibility, Hydrogen, and Plus."
+          blurb="Deep platform knowledge: Liquid, App Extensions, Checkout Extensibility, Hydrogen, and Plus."
           imageSrc="/images/value/shopify.jpg" /* ensure this exists under /public */
         />
         <ValueCard
@@ -154,7 +154,7 @@ export function ValueProps() {
         <ValueCard
           icon={BarChart3}
           title="Measurable results"
-          blurb="We track what matters—CWV, AOV, checkout rate—so you see impact, not output."
+          blurb="We track what matters - CWV, AOV, checkout rate - so you see impact, not output."
           imageSrc="/images/value/results.jpg"
         />
       </div>

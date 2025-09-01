@@ -77,7 +77,7 @@ const DEFAULT_SERVICES: Service[] = [
     title: "Shopify Plus Solutions",
     href: "/services#shopify-plus",
     description:
-      "Enterprise builds, internationalization, and complex ops—designed to scale on Plus.",
+      "Enterprise builds, internationalization, and complex ops-designed to scale on Plus.",
     features: ["Multi-store architecture", "B2B & wholesale", "Checkout extensibility"],
     icon: Icons.plus,
     badge: "Plus",
@@ -94,7 +94,7 @@ const DEFAULT_SERVICES: Service[] = [
     title: "Migrations to Shopify",
     href: "/services#migrations",
     description:
-      "Smooth replatforming from Woo, Magento, BigCommerce, or custom stacks—without SEO loss.",
+      "Smooth replatforming from Woo, Magento, BigCommerce, or custom stacks without SEO loss.",
     features: ["Data & URL mapping", "Redirects & SEO parity", "Risk-managed launches"],
     icon: Icons.migrate,
   },

@@ -5,7 +5,7 @@ const SERVICES = [
   {
     title: "Custom Development",
     description:
-      "Tailored Shopify solutions built for your business growth — no cookie-cutter templates.",
+      "Tailored Shopify solutions built for your business growth. No cookie-cutter templates.",
     icon: Code,
   },
   {
@@ -23,7 +23,7 @@ const SERVICES = [
   {
     title: "Ongoing Support",
     description:
-      "Reliable, friendly support when you need it most — ensuring your store runs smoothly.",
+      "Reliable, friendly support when you need it mostensuring your store runs smoothly.",
     icon: Headphones,
   },
 ];

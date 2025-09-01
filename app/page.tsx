@@ -7,6 +7,8 @@ import About from "@/components/sections/About";
 import ConceptHighlights from "@/components/sections/ConceptHighlights";
 import HeroDivider from "@/components/sections/HeroDivider";
 import ServicesShowcaseHome from "@/components/sections/ServicesShowcaseHome";
+import BlogTeaserHome from "@/components/sections/BlogTeaserHome";
+import FinalCtaBanner from "@/components/sections/FinalCtaBanner";
 
 
 
@@ -16,7 +18,7 @@ export default function HomePage() {
       <Hero
         eyebrow="Shopify Development"
         heading={"YOUR ULTIMATE\nSHOPIFY PARTNER"}
-        subheading="Custom themes, speed, CRO, and integrations—built to scale."
+        subheading="Custom themes, speed, CRO, and integrations - built to scale."
         primaryCta={{ label: "Get Started", href: "/contact?service=custom-dev#intake" }}
         secondaryCta={{ label: "How it works", href: "/process", variant: "secondary" }}
         slides={[
@@ -30,7 +32,8 @@ export default function HomePage() {
       <ConceptHighlights />
       <WhyUs />
       <ServicesShowcaseHome />
-
+      <BlogTeaserHome />
+      <FinalCtaBanner />
     </>
   );
 }

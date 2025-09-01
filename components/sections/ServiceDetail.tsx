@@ -8,16 +8,13 @@ export type ServiceDetailProps = {
   id: string;
   eyebrow?: string;
   title: string;
-  lead?: string;            // bold intro line
-  body?: string;            // supporting paragraph
-  bullets?: string[];       // optional list under body
+  lead?: string;
+  body?: string;
+  bullets?: string[];
   cta?: { label: string; href: string };
   image: { src: string; alt: string; width?: number; height?: number; priority?: boolean };
-  accent?: {
-    color?: string;         // tailwind color classes, e.g. "bg-yellow-400"
-    icon?: ReactNode;       // inline SVG
-  };
-  reverse?: boolean;        // image on the left on alt rows
+  accent?: { color?: string; icon?: ReactNode };
+  reverse?: boolean;
 };
 
 const DefaultIcon = (
@@ -43,37 +40,26 @@ export default function ServiceDetail({
     <section
       id={id}
       className="scroll-mt-24 border-t border-slate-200 bg-white py-14 first:border-t-0 md:py-20"
+      // Prevent any child (like the accent) from creating a horizontal scrollbar
+      style={{ overflowX: "clip" }}
     >
       <div className="container mx-auto grid items-center gap-10 px-4 md:grid-cols-2">
         {/* TEXT */}
         <div className={reverse ? "md:order-2" : ""}>
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            {eyebrow}
-          </p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{eyebrow}</p>
           <h2 className="mt-2 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">
             {title}
           </h2>
 
-          {lead && (
-            <p className="mt-4 font-semibold text-slate-900">
-              {lead}
-            </p>
-          )}
+          {lead && <p className="mt-4 font-semibold text-slate-900">{lead}</p>}
 
-          {body && (
-            <p className="mt-3 max-w-prose text-slate-600">
-              {body}
-            </p>
-          )}
+          {body && <p className="mt-3 max-w-prose text-slate-600">{body}</p>}
 
           {!!bullets.length && (
             <ul className="mt-5 space-y-2 text-slate-700">
               {bullets.map((b) => (
                 <li key={b} className="flex gap-2">
-                  <span
-                    aria-hidden
-                    className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-sky-500"
-                  />
+                  <span aria-hidden className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-sky-500" />
                   <span>{b}</span>
                 </li>
               ))}
@@ -105,12 +91,28 @@ export default function ServiceDetail({
                 className="object-cover"
               />
             </div>
+
+            {/* Small screens: accent stays INSIDE, no overflow ever */}
+            <div
+              aria-hidden
+              className={`
+                pointer-events-none absolute bottom-2 ${reverse ? "right-2" : "left-2"}
+                h-20 w-20 sm:h-24 sm:w-24 rounded-xl shadow-md
+                ${accent?.color ?? "bg-yellow-400"} grid place-items-center md:hidden
+              `}
+            >
+              {accent?.icon ?? DefaultIcon}
+            </div>
           </div>
 
-          {/* colored accent tile overlapping the photo */}
+          {/* md+: outside badge look, but with gentler offset */}
           <div
-            className={`absolute ${reverse ? "-right-6" : "-left-6"} -bottom-6 grid h-36 w-36 place-items-center rounded-xl shadow-md ${accent?.color ?? "bg-yellow-400"}`}
             aria-hidden
+            className={`
+              pointer-events-none absolute -bottom-6 ${reverse ? "-right-4" : "-left-4"}
+              hidden h-36 w-36 rounded-xl shadow-md md:grid place-items-center
+              ${accent?.color ?? "bg-yellow-400"}
+            `}
           >
             {accent?.icon ?? DefaultIcon}
           </div>

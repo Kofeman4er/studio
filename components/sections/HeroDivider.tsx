@@ -1,24 +1,37 @@
 "use client";
 
-type Logo = { src: string; alt: string };
+import {
+  Layout,
+  FileText,
+  Boxes,
+  Monitor,
+  PenTool,
+  Palette,
+  Image,
+  BarChart3,
+} from "lucide-react";
 
-const LOGOS: Logo[] = [
-  { src: "/badges/shopify-partner.png", alt: "Shopify Partner" },
-  { src: "/badges/klaviyo.svg", alt: "Klaviyo" },
-  { src: "/badges/google.svg", alt: "Google" },
-  { src: "/badges/algolia.svg", alt: "algolia" },
+type Feature = { icon: React.ElementType; label: string };
+
+const FEATURES: Feature[] = [
+  { icon: Layout, label: "Landing Page" },
+  { icon: FileText, label: "Blog & Article Graphics" },
+  { icon: Boxes, label: "Mockups" },
+  { icon: Monitor, label: "Website Design" },
+  { icon: PenTool, label: "UI/UX Design" },
+  { icon: Palette, label: "Brand Identity" },
+  { icon: Image, label: "Marketing Assets" },
+  { icon: BarChart3, label: "CRO Graphics" },
 ];
 
 export default function HeroDivider() {
   return (
-    <section className="relative isolate overflow-hidden">
-      {/* Black → White gradient */}
+    <section className="relative isolate overflow-hidden pointer-events-none select-none">
       <div className="absolute inset-0 bg-gradient-to-b from-[#000000] via-[#0b0b0b] to-white" />
 
       <div className="relative mx-auto w-full max-w-[1400px] py-8 sm:py-10">
-        {/* Marquee container */}
         <div
-          className="mt-4 h-14 sm:h-16 overflow-hidden"
+          className="mt-4 h-24 sm:h-28 overflow-hidden"
           style={{
             WebkitMaskImage:
               "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
@@ -26,18 +39,13 @@ export default function HeroDivider() {
               "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
           }}
         >
-          {/* Moving track */}
+          {/* ❗ No fixed width here */}
           <div
-            className="marquee-track flex"
-            style={
-              {
-                width: "200%",
-                "--marquee-duration": "28s",
-              } as React.CSSProperties
-            }
+            className="marquee-track inline-flex gap-3 sm:gap-4"
+            style={{ "--marquee-duration": "52s" } as React.CSSProperties}
           >
-            <Sequence logos={LOGOS} />
-            <Sequence logos={LOGOS} />
+            <Sequence items={FEATURES} />
+            <Sequence items={FEATURES} />
           </div>
         </div>
       </div>
@@ -47,19 +55,25 @@ export default function HeroDivider() {
   );
 }
 
-function Sequence({ logos }: { logos: Logo[] }) {
+function Sequence({ items }: { items: Feature[] }) {
   return (
-    <div className="lg:mr-40 lg:ml-40 sm:mr-10 sm:ml-10 marquee-group flex w-1/2 flex-shrink-0 items-center justify-between gap-2 sm:gap-8 md:gap-10 px-2">
-      {logos.map((l, i) => (
-        <div key={`${l.src}-${i}`} className="shrink-0">
-          <img
-            src={l.src}
-            alt={l.alt}
-            loading="lazy"
-            className="block h-12 sm:h-7 md:h-8 w-auto max-w-[10vw] sm:max-w-none object-contain brightness-0 invert opacity-90"
-          />
-        </div>
-      ))}
+    // ❗ Let the sequence size to its content; don't force w-1/2
+    <div className="marquee-group inline-flex items-center gap-3 sm:gap-4 shrink-0">
+      {items.map((item, i) => {
+        const Icon = item.icon;
+        return (
+          // ❗ Prevent flex shrinking so cards never collapse/overlap
+          <div
+            key={`${item.label}-${i}`}
+            className="flex flex-none items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-3 border-2 border-white rounded-xl bg-transparent"
+          >
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" aria-hidden="true" />
+            <p className="text-xs sm:text-sm md:text-base font-semibold text-white whitespace-nowrap">
+              {item.label}
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -72,8 +86,12 @@ function StyleBlock() {
         will-change: transform;
       }
       @keyframes hero-marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         .marquee-track {

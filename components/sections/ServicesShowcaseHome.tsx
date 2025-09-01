@@ -26,7 +26,7 @@ const SERVICES: Service[] = [
     { title: "Theme Design", href: "/services#themes", image: "/images/services/themes_home.jpg", icon: MonitorSmartphone, blurb: "Modern, fast themes crafted for conversion and maintainability." },
     { title: "Shopify Plus", href: "/services#shopify-plus", image: "/images/services/plus_home.jpg", icon: ShoppingCart, blurb: "Advanced capabilities, checkout customizations, and scale-ready setups." },
     { title: "Migrations", href: "/services#migrations", image: "/images/services/migrations_home.jpg", icon: Rocket, blurb: "Seamless moves to Shopify with data integrity and zero lost SEO." },
-    { title: "Apps & Integrations", href: "/services#apps", image: "/images/services/apps_home.jpg", icon: Plug, blurb: "Connect your stack—Klaviyo, Algolia, ERPs, 3PLs, and more." },
+    { title: "Apps & Integrations", href: "/services#apps", image: "/images/services/apps_home.jpg", icon: Plug, blurb: "Connect your stack - Klaviyo, Algolia, ERPs, 3PLs, and more." },
     { title: "CRO & Optimization", href: "/services#cro", image: "/images/services/cro_home.jpg", icon: BarChart3, blurb: "Test, measure, and iterate to lift revenue and AOV." },
     { title: "Support & Maintenance", href: "/services#support", image: "/images/services/support_home.jpg", icon: Wrench, blurb: "Reliable monthly support for fixes, tweaks, and small wins." },
     { title: "Headless / Hydrogen", href: "/services#custom-dev", image: "/images/services/headless_home.jpg", icon: Layers, blurb: "Composable storefronts for performance and flexibility." },
